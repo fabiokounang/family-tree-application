@@ -21,7 +21,13 @@
   src: url('./assets/fonts/Raleway-SemiBold.ttf');
 }
 
+@font-face {
+  font-family: 'raleway-bold';
+  src: url('./assets/fonts/Raleway-Bold.ttf');
+}
+
 ion-title {
+  font-weight: bold;
   font-family: 'raleway-reguler';
 }
 

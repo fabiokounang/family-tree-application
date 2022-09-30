@@ -17,18 +17,19 @@
     </ion-card-header>
   </ion-card>
   <ion-list>
-    <ion-item>
+    <ion-item routerLink="/profile-information" class="ion-no-padding">
+      <ion-icon name="person-outline"></ion-icon>
       <ion-label>Profile Information</ion-label>
     </ion-item>
-    <ion-item>
+    <ion-item routerLink="/change-password" class="ion-no-padding">
+      <ion-icon name="lock-closed-outline"></ion-icon>
       <ion-label>Change Password</ion-label>
     </ion-item>
-    <ion-item>
+    <ion-item routerLink="/change-theme" class="ion-no-padding">
+      <ion-icon name="color-palette-outline"></ion-icon>
       <ion-label>Change Theme</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Signout</ion-label>
     </ion-item>
   </ion-list>
 
+  <ion-button class="ion-margin" expand="block" routerLink="/">Signout</ion-button>
 </ion-content>

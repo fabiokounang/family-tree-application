@@ -1,4 +1,5 @@
 ion-content {
+  position: relative;
   ion-card.bio {
     margin: 1rem;
     font-family: 'raleway-reguler';
@@ -28,7 +29,11 @@ ion-content {
   }
 
   ion-list {
+    padding: 0 1rem;
     ion-item {
+      ion-icon {
+        padding-right: 1rem;
+      }
       ion-label {
         font-family: 'raleway-semibold';
       }

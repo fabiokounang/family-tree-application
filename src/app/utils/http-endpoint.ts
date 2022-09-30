@@ -5,5 +5,6 @@ export default {
   'master-city': 'api/province_city/city_user',
   'master-theme': 'api/theme/user',
   'master-theme-user': 'api/theme/usertheme',
+  'master-change-password': 'api/user/changepassword',
   'master-calendar-active': 'api/calendar/user/active'
 }

@@ -20,6 +20,18 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'change-theme',
+    loadChildren: () => import('./pages/change-theme/change-theme.module').then( m => m.ChangeThemePageModule)
+  },
+  {
+    path: 'profile-information',
+    loadChildren: () => import('./pages/profile-information/profile-information.module').then( m => m.ProfileInformationPageModule)
   }
 ]
 
