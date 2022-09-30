@@ -2,15 +2,15 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@capacitor/core';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { map } from 'rxjs/operators';
-import { ProvincePaginationInterface } from '../interfaces/provincepagination.interface';
-import { CityInterface } from '../interfaces/city.interface';
-import { CityPaginationInterface } from '../interfaces/citypagination.interface';
-import { DropdownInterface } from '../interfaces/dropdown.interface';
+import { ProvincePaginationInterface } from '../../interfaces/provincepagination.interface';
+import { CityInterface } from '../../interfaces/city.interface';
+import { CityPaginationInterface } from '../../interfaces/citypagination.interface';
+import { DropdownInterface } from '../../interfaces/dropdown.interface';
 import { IonSelect } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { SharedService } from '../services/shared.services';
+import { SharedService } from '../../services/shared.services';
 
 @Component({
   selector: 'app-signup',
@@ -34,7 +34,8 @@ export class SignupPage implements OnInit {
     city_of_residence: new FormControl({ value: null, disabled: true }, [Validators.required]),
     phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(14)]),
     wechat: new FormControl(null, [Validators.minLength(10), Validators.maxLength(14)]),
-    postal_address: new FormControl(null, [Validators.required, Validators.maxLength(6)])
+    postal_address: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+    remark: new FormControl(null)
   });
   provinces: DropdownInterface[] = [];
   cities: any[] = [];
@@ -43,9 +44,6 @@ export class SignupPage implements OnInit {
   constructor (private apiService: ApiService, private sharedService: SharedService, private router: Router) { }
 
   ngOnInit() {
-    this.signupForm.valueChanges.subscribe(() => {
-      console.log(this.signupForm.controls);
-    })
     this.getAllProvince();
     this.getAllCity();
   }

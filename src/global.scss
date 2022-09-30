@@ -16,6 +16,14 @@
   src: url('./assets/fonts/Raleway-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'raleway-semibold';
+  src: url('./assets/fonts/Raleway-SemiBold.ttf');
+}
+
+ion-title {
+  font-family: 'raleway-reguler';
+}
 
 @import "~@ionic/angular/css/core.css";
 

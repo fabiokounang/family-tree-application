@@ -1,0 +1,93 @@
+ion-content {
+  ion-card {
+    margin: 1rem;
+    font-family: 'raleway-reguler';
+  }
+  ion-card.bio {
+    ion-card-header {
+      display: flex;
+      align-items: center;
+
+      img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+      }
+
+      div {
+        p {
+          margin: 0;
+          margin-top: 2px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  ion-card.event {
+    ion-card-content {
+      ion-list {
+        ion-item {
+          ion-label {
+            font-family: 'raleway-reguler';
+            ion-note {
+              font-family: 'raleway-reguler';
+              font-size: 12px;
+              padding: 0;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ion-card.calendar-date {
+    .calendar {
+      padding: 1rem;
+      border: 1px solid lightgrey;
+      box-sizing: border-box;
+      box-shadow: 1px 2px 2px lightgrey;
+      font-family: 'raleway-reguler';
+
+    }
+
+    .day {
+      cursor: pointer;
+      width: 14.2%;
+      display: inline-block;
+      padding: .8rem;
+      box-sizing:border-box;
+      text-align: center;
+    }
+
+    .day:hover {
+      font-weight: bold;
+      background: #eee;
+    }
+
+    .weekend {
+      color: red;
+      font-weight: bold;
+    }
+
+    .isEvent {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .isEventAndWeekdn {
+      color: blue;
+      font-weight: bold;
+    }
+
+    .month {
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+    }
+  }
+
+}

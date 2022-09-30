@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ProfilePage } from './profile/profile.page';
+import { HomePage } from './pages/home/home.page';
+import { ProfilePage } from './pages/profile/profile.page';
 
 const routes: Routes = [
   {
@@ -10,18 +11,18 @@ const routes: Routes = [
   },
   {
     path: 'signin',
-    loadChildren: () => import('./signin/signin.module').then( m => m.SigninPageModule)
+    loadChildren: () => import('./pages/signin/signin.module').then( m => m.SigninPageModule)
   },
   {
     path: 'signup',
-    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+    loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   }
+]
 
-];
 
 @NgModule({
   imports: [

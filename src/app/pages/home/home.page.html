@@ -1,23 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Welcome, [Person]</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-router-outlet></ion-router-outlet>
   <ion-tabs>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="home">
+      <ion-tab-button routerLink="/home/homepage">
         <ion-icon name="home"></ion-icon>
         <ion-label>Home</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="/tree">
+      <ion-tab-button routerLink="/home/tree">
         <ion-icon name="leaf"></ion-icon>
         <ion-label>Family Tree</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="profile">
+      <ion-tab-button routerLink="/home/profile">
         <ion-icon name="person"></ion-icon>
         <ion-label>About</ion-label>
       </ion-tab-button>

@@ -2,8 +2,8 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from '../services/api.service';
-import { SharedService } from '../services/shared.services';
+import { ApiService } from '../../services/api.service';
+import { SharedService } from '../../services/shared.services';
 
 @Component({
   selector: 'app-signin',
@@ -25,7 +25,7 @@ export class SigninPage implements OnInit {
     if (this.signinForm.valid) {
       this.apiService.connection('master-signin', this.signinForm.value).subscribe({
         next: (response: any) => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home', 'homepage']);
         },
         error: (error: HttpErrorResponse) => {
           console.log(error);

@@ -24,15 +24,16 @@ ion-content {
       }
     }
 
-
     ion-button {
       width: 100%;
       box-sizing: border-box;
     }
     small.reg {
       display: flex;
+      font-family: 'raleway-reguler';
 
       a {
+        padding-left: .5rem;
         text-decoration: none;
       }
     }

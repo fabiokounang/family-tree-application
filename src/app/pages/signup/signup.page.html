@@ -98,6 +98,11 @@
         <ion-input formControlName="postal_address" type="number"></ion-input>
       </ion-item>
 
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Description (Tell a little about yourself)</ion-label>
+        <ion-textarea formControlName="remark"></ion-textarea>
+      </ion-item>
+
       <ion-button [disabled]="signupForm.invalid" type="submit" class="ion-margin-top" color="primary">Signup</ion-button>
       <small class="reg">
         Already have an account ?

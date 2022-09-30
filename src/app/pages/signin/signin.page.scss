@@ -38,8 +38,10 @@ ion-content {
 
       small.reg {
         display: flex;
+        font-family: 'raleway-reguler';
 
         a {
+          padding-left: .5rem;
           text-decoration: none;
         }
       }
