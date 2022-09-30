@@ -10,6 +10,13 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
+
+@font-face {
+  font-family: 'raleway-reguler';
+  src: url('./assets/fonts/Raleway-Regular.ttf');
+}
+
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */

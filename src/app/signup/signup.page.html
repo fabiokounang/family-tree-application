@@ -1,0 +1,108 @@
+<ion-content class="ion-padding-horizontal">
+  <form (ngSubmit)="onSignup()" [formGroup]="signupForm">
+    <ion-grid>
+      <ion-text color="primary">
+        <h1>Everything is connected</h1>
+      </ion-text>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input formControlName="username" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Confirmation Password</ion-label>
+        <ion-input formControlName="confirmation_password" type="password"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input formControlName="first_name_latin" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input formControlName="last_name_latin" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Chinese Name</ion-label>
+        <ion-input formControlName="chinese_name" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Phone Number (08xxxxxxxx)</ion-label>
+        <ion-input formControlName="phone" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Wechat (08xxxxxxxx)</ion-label>
+        <ion-input formControlName="wechat" type="tel"></ion-input>
+      </ion-item>
+
+      <ion-radio-group formControlName="gender" class="ion-margin-bottom">
+        <ion-list-header class="ion-no-padding">
+          <ion-label>Gender</ion-label>
+        </ion-list-header>
+
+        <ion-item class="ion-no-padding">
+          <ion-label>Male</ion-label>
+          <ion-radio slot="start" [value]="1"></ion-radio>
+        </ion-item>
+
+        <ion-item class="ion-no-padding">
+          <ion-label>Female</ion-label>
+          <ion-radio slot="start" [value]="2"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-input formControlName="date_of_birth" type="date"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label>Select Province</ion-label>
+        <ion-select (ionChange)="onSelectProvince($event)" formControlName="place_of_birth">
+          <ion-select-option *ngFor="let province of provinces" [value]="province.id">
+            {{province.name | titlecase}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label>Select City</ion-label>
+        <ion-select formControlName="city_of_residence">
+          <ion-select-option *ngFor="let city of selectedCities" [value]="city.id">
+            {{city.name | titlecase}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Address</ion-label>
+        <ion-textarea formControlName="address"></ion-textarea>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Postal Address</ion-label>
+        <ion-input formControlName="postal_address" type="number"></ion-input>
+      </ion-item>
+
+      <ion-button [disabled]="signupForm.invalid" type="submit" class="ion-margin-top" color="primary">Signup</ion-button>
+      <small class="reg">
+        Already have an account ?
+        <a routerLink="/signin">Signin here</a>
+      </small>
+    </ion-grid>
+  </form>
+</ion-content>
