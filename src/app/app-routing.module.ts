@@ -32,13 +32,17 @@ const routes: Routes = [
   {
     path: 'profile-information',
     loadChildren: () => import('./pages/profile-information/profile-information.module').then( m => m.ProfileInformationPageModule)
+  },
+  {
+    path: 'event/:id',
+    loadChildren: () => import('./pages/register-event/register-event.module').then( m => m.RegisterEventPageModule)
   }
 ]
 
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, useHash: true })
   ],
   exports: [RouterModule]
 })

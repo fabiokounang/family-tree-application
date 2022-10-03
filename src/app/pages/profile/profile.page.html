@@ -4,15 +4,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="user">
   <ion-card class="bio">
     <ion-card-header>
-      <img src="https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png" />
-      <div>
-        <ion-card-subtitle>0000001</ion-card-subtitle>
-        <ion-text>[FullName] ([Chinese Name])</ion-text>
-        <p>Point : {{100000 | number}}</p>
+      <div class="image-upload">
+        <label for="file-input">
+          <img [src]="url + user.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" />
+        </label>
 
+        <input (change)="onUpload($event)" id="file-input" type="file" />
+      </div>
+
+      &nbsp;
+      <div>
+        <ion-card-subtitle>{{user.no_anggota}}</ion-card-subtitle>
+        <ion-text>{{user.first_name_latin | titlecase}} {{user.last_name_latin | titlecase}} ({{user.chinese_name}})</ion-text>
+        <p>Point : {{user.point | number}}</p>
       </div>
     </ion-card-header>
   </ion-card>
@@ -25,11 +32,11 @@
       <ion-icon name="lock-closed-outline"></ion-icon>
       <ion-label>Change Password</ion-label>
     </ion-item>
-    <ion-item routerLink="/change-theme" class="ion-no-padding">
+    <!-- <ion-item routerLink="/change-theme" class="ion-no-padding">
       <ion-icon name="color-palette-outline"></ion-icon>
       <ion-label>Change Theme</ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 
-  <ion-button class="ion-margin" expand="block" routerLink="/">Signout</ion-button>
+  <ion-button class="ion-margin" expand="block" (click)="onLogout()">Signout</ion-button>
 </ion-content>

@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'frontend-app',
+  appId: 'com.tree.familytree',
+  appName: 'FamilyTree',
   webDir: 'www',
   bundledWebRuntime: false
 };

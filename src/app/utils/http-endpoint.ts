@@ -6,5 +6,8 @@ export default {
   'master-theme': 'api/theme/user',
   'master-theme-user': 'api/theme/usertheme',
   'master-change-password': 'api/user/changepassword',
-  'master-calendar-active': 'api/calendar/user/active'
+  'master-calendar-active': 'api/calendar/user/active',
+  'master-user-upload': 'api/user/uploadimage',
+  'master-self-user': 'api/user/self',
+  'master-register-event': 'api/occasion/present'
 }

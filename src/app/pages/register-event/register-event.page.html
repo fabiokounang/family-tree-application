@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Please login to get points</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content direction="xy" class="ion-padding-horizontal">
+  <form (ngSubmit)="onSignin()" [formGroup]="registerEventForm">
+    <ion-grid>
+      <!-- <ion-text color="primary">
+        <h1>Everything is connected</h1>
+      </ion-text> -->
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input formControlName="username" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+
+      <ng-container *ngIf="!loader">
+        <ion-button type="submit" [disabled]="registerEventForm.invalid" class="ion-margin-top" color="primary">Redeem</ion-button>
+      </ng-container>
+
+      <ion-spinner *ngIf="loader"></ion-spinner>
+    </ion-grid>
+  </form>
+</ion-content>
+

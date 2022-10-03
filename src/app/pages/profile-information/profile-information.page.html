@@ -9,5 +9,59 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Username</ion-label>
+      <ion-note>{{user?.username}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Email</ion-label>
+      <ion-note>{{user?.email | titlecase}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>First Name</ion-label>
+      <ion-note>{{user?.first_name_latin | titlecase}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Last Name</ion-label>
+      <ion-note>{{user?.last_name_latin | titlecase}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Chinese Name</ion-label>
+      <ion-note>{{user?.chinese_name}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Username</ion-label>
+      <ion-note>{{user?.username}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Address</ion-label>
+      <ion-note>{{user?.address}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Place Of Birth</ion-label>
+      <ion-note>{{user?.place_of_birth}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>City</ion-label>
+      <ion-note>{{user?.city_of_residence}}</ion-note>
+    </ion-item>
 
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Birthdate</ion-label>
+      <ion-note>{{user?.date_of_birth}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Member No</ion-label>
+      <ion-note>{{user?.no_anggota}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Phone</ion-label>
+      <ion-note>{{user?.phone}}</ion-note>
+    </ion-item>
+    <ion-item class="ion-no-padding ion-margin">
+      <ion-label>Wechat</ion-label>
+      <ion-note>{{user?.wechat || '-'}}</ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">frontend-app</string>
+    <string name="title_activity_main">frontend-app</string>
+    <string name="package_name">com.tree.familytree</string>
+    <string name="custom_url_scheme">com.tree.familytree</string>
+</resources>

@@ -1,52 +1,60 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Welcome, [Person]</ion-title>
+  <ion-toolbar *ngIf="user">
+    <ion-title>{{user.username}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="notifications-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class="bio">
+  <ion-card *ngIf="user" class="bio">
     <ion-card-header>
-      <img src="https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png" />
+      <!-- <img [src]="url + user.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" /> -->
+      <div class="bio-scan">
+        <ion-icon (click)="onOpenCamera()" name="scan-sharp"></ion-icon>
+        <ion-note>Scan Here</ion-note>
+      </div>
       &nbsp;
-      <div>
-        <ion-card-subtitle>0000001</ion-card-subtitle>
-        <ion-text>[FullName] ([Chinese Name])</ion-text>
-        <p>Point : {{100000 | number}}</p>
+      &nbsp;
+      <div class="bio-biodata">
+        <ion-card-subtitle>{{user.no_anggota}}</ion-card-subtitle>
+        <ion-text>{{user.first_name_latin | titlecase}} {{user.last_name_latin | titlecase}} ({{user.chinese_name}})</ion-text>
+
+        <div>
+          <p>Point : {{user.point | number}}</p>
+          <ion-icon (click)="onInformation()" name="information-circle-outline"></ion-icon>
+        </div>
       </div>
     </ion-card-header>
-    <ion-card-content>
-      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota
-    </ion-card-content>
+    <!-- <ion-card-content>
+      {{user.remark}}
+    </ion-card-content> -->
   </ion-card>
 
-  <ion-card class="event">
-    <ion-card-header>
-      <ion-card-subtitle>Today's Event</ion-card-subtitle>
+  <ion-card class="event" *ngIf="calendar">
+    <ion-card-header class="ion-no-margin">
+      <ion-card-subtitle>Today's Event ({{calendar.calendar[nowMonth][today].length}})</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
-      <ion-list lines="full" [inset]="true">
-        <ion-item class="ion-no-margin ion-no-padding">
-          <ion-avatar>
-            <img src="https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png" alt="">
-          </ion-avatar>
-          &nbsp;
+      <ion-list *ngIf="calendar.calendar[nowMonth][today].length > 0" class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
+        <ion-item (click)="onDetailEvent(event)" *ngFor="let event of calendar.calendar[nowMonth][today].slice(0, 2)" class="ion-no-margin ion-no-padding">
+          <!-- <ion-avatar>
+            <img [src]="event.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" alt="">
+          </ion-avatar> -->
+          <!-- &nbsp; -->
           <ion-label>
-            <h3>Grandma Birthday</h3>
-            <ion-note>She's turning 98 today !</ion-note>
-          </ion-label>
-        </ion-item>
-        <ion-item class="ion-no-margin ion-no-padding">
-          <ion-avatar>
-            <img src="https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png" alt="">
-          </ion-avatar>
-          &nbsp;
-          <ion-label>
-            <h3>Graduation Day, Granddaughter</h3>
-            <ion-note>Celebrate with her !</ion-note>
+            <h3>{{event.name}}</h3>
+            <ion-note>
+              <span>{{event.description.slice(0, 40)}}</span>
+              <span *ngIf="event.description.length > 40">...</span>
+            </ion-note>
           </ion-label>
         </ion-item>
       </ion-list>
+
+      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].length <= 0">No Event</p>
+      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].length > 2" (click)="setOpen(true, calendar.calendar[nowMonth][today])">See more</p>
     </ion-card-content>
   </ion-card>
 
@@ -67,12 +75,54 @@
         appWeekend
         [year]="calendar.year"
         [month]="month"
-        [day]="day"
-        (click)="onOpenFormEvent(calendar, month, day)"
+        [day]="+day"
+        (click)="setOpen(true, calendar.calendar[month][day])"
         [ngClass]="{ isEvent: calendar.calendar[month][day].length > 0 }"
+        [event]="calendar.calendar[month][day].length"
         *ngFor="let day of objectKeys(calendar.calendar[month])">
         {{day}}
       </span>
+
+      <div class="boxes">
+        <span>
+          <span class="box box1"></span>
+          <span>Weekend</span>
+        </span>
+        <span>
+          <span class="box box2"></span>
+          <span>Event</span>
+        </span>
+        <span>
+          <span class="box box3"></span>
+          <span>Weekend & Event</span>
+        </span>
+      </div>
+
+      <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Event Detail</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="setOpen(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-list class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
+              <ion-item *ngFor="let event of detailDataCalendar" class="ion-no-margin ion-no-padding">
+                <ion-label class="ion-text-wrap">
+                  <h3>{{event.name}}</h3>
+                  <p>
+                    <span>{{event.description}}</span>
+                  </p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
     </div>
   </ion-card>
 </ion-content>

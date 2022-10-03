@@ -1,18 +1,31 @@
 ion-content {
   position: relative;
+  font-family: 'raleway-semibold';
   ion-card.bio {
     margin: 1rem;
-    font-family: 'raleway-reguler';
+    font-family: 'raleway-semibold';
+    font-size: 16px;
+
     ion-card-header {
       display: flex;
       align-items: center;
       flex-direction: column;
       justify-content: center;
 
+      div.image-upload>input {
+        display: none;
+      }
+
+      ion-card-subtitle {
+        font-size: 16px;
+        font-family: 'raleway-bold';
+      }
+
       img {
         border-radius: 50%;
         width: 120px;
         height: 120px;
+        object-fit: cover;
       }
 
       div {

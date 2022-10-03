@@ -15,11 +15,15 @@
         <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
 
-      <ion-button type="submit" [disabled]="signinForm.invalid" class="ion-margin-top" color="primary">Signin</ion-button>
-      <small class="reg">
-        Doesn't have an account ?
-        <a routerLink="/signup">Signup here</a>
-      </small>
+      <ng-container *ngIf="!loader">
+        <ion-button type="submit" [disabled]="signinForm.invalid" class="ion-margin-top" color="primary">Signin</ion-button>
+        <small class="reg">
+          Doesn't have an account ?
+          <a routerLink="/signup">Signup here</a>
+        </small>
+      </ng-container>
+
+      <ion-spinner *ngIf="loader"></ion-spinner>
     </ion-grid>
   </form>
 </ion-content>

@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
+import { UserInterface } from 'src/app/interfaces/user.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { SharedService } from 'src/app/services/shared.services';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-homepage',
@@ -21,18 +25,37 @@ export class HomepagePage implements OnInit {
   text: string = '#FFFFFF';
   emptyDay: any = [];
   months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  url: string = '';
+  nowMonth = new Date().getMonth() + 1;
+  today = new Date().getDate();
+  isModalOpen: boolean = false;
+  detailDataCalendar: any = [];
 
-  constructor (private apiService: ApiService) { }
+  constructor (private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
 
   ngOnInit(): void {
-    // this.user = {
-    //   username: this.apiService.getLocalStorageUsername(),
-    //   latin_name: this.apiService.getLocalStorageLatin(),
-    //   chinese_name: this.apiService.getLocalStorageChinese(),
-    //   no_anggota: this.apiService.getLocalStorageNoAnggota()
-    // }
+    this.url = this.meta.getTag('name=api').content + 'images/';
+  }
 
+  ionViewWillEnter () {
+    this.getUser();
     this.getCalendar();
+  }
+
+  getUser () {
+    this.apiService.connection('master-self-user').subscribe({
+      next: (response: UserInterface) => {
+        this.user = response;
+      },
+      error: ({ error }: HttpErrorResponse) => {
+        console.log(error);
+      },
+      complete: () => {}
+    });
+  }
+
+  onInformation () {
+    this.sharedService.callAlert('Point Information', 'You can redeem point and use it to get prizes', '', ['Dismiss']);
   }
 
   getCalendar () {
@@ -43,15 +66,53 @@ export class HomepagePage implements OnInit {
         const d = `${this.months[this.month - 1]} 1, ${year} 00:00:01`;
         const day = new Date(d).getDay();
         this.emptyDay = Array.from(Array(day).keys());
+        console.log(this.calendar.calendar[this.month][this.today]);
       },
       error: ({ error }: HttpErrorResponse) => {
         this.loader = false;
-        this.apiService.processErrorHttp(!error.error ? error : error.error);
+        this.sharedService.callAlert(!error.error ? error : error.error);
       },
       complete: () => {
         this.loader = false;
       }
     });
+  }
+
+  onDetailEvent (event) {
+    this.sharedService.callAlert(event.name, event.description);
+  }
+
+  onCalendarEvents (events) {
+    this.isModalOpen = !this.isModalOpen;
+  }
+
+  setOpen (bool, data = null) {
+    if (bool && data.length <= 0) {
+      this.sharedService.callToast('No event on this data', 'bottom', 1000);
+      return;
+    }
+
+    this.isModalOpen = bool;
+    if (this.isModalOpen) this.detailDataCalendar = data;
+    else this.detailDataCalendar = null;
+  }
+
+  async onOpenCamera () {
+    console.log('Opening the camera');
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    var imageUrl = image.webPath;
+    console.log(imageUrl);
+
   }
 
   onOpenFormEvent (calendar, month, day) {
