@@ -1,16 +1,15 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@capacitor/core';
-import { ApiService } from '../../services/api.service';
 import { map } from 'rxjs/operators';
-import { ProvincePaginationInterface } from '../../interfaces/provincepagination.interface';
-import { CityInterface } from '../../interfaces/city.interface';
-import { CityPaginationInterface } from '../../interfaces/citypagination.interface';
-import { DropdownInterface } from '../../interfaces/dropdown.interface';
-import { IonSelect } from '@ionic/angular';
-import { Router } from '@angular/router';
+
+import { ApiService } from '../../services/api.service';
 import { SharedService } from '../../services/shared.services';
+
+import { ProvincePaginationInterface } from '../../interfaces/provincepagination.interface';
+import { DropdownInterface } from '../../interfaces/dropdown.interface';
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +34,7 @@ export class SignupPage implements OnInit {
   makeForm () {
     this.signupForm = new FormGroup({
       username: new FormControl(null, [Validators.required, Validators.maxLength(30)]),
-      email: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
       confirmation_password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
       gender: new FormControl(null, [Validators.required]),

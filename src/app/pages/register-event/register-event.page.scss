@@ -1,55 +1,9 @@
-ion-header {
-  ion-toolbar {
-    text-align: center;
-  }
-}
 ion-content {
-  form {
+  div.flex-wrap {
     height: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-
-    ion-grid {
-      // height: 100%;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-
-      ion-text {
-        h1 {
-          font-family: 'raleway-reguler';
-        }
-      }
-
-      ion-radio-group {
-        width: 100%;
-      }
-
-      ion-item {
-        width: 100%;
-
-        ion-label {
-          font-size: 12px;
-          font-family: 'raleway-reguler';
-        }
-      }
-
-      ion-button {
-        width: 100%;
-        box-sizing: border-box;
-      }
-
-      small.reg {
-        display: flex;
-        font-family: 'raleway-reguler';
-
-        a {
-          padding-left: .5rem;
-          text-decoration: none;
-        }
-      }
-    }
+    justify-content: center;
   }
 }

@@ -5,6 +5,8 @@ import { UserInterface } from 'src/app/interfaces/user.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.services';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -31,7 +33,7 @@ export class HomepagePage implements OnInit {
   isModalOpen: boolean = false;
   detailDataCalendar: any = [];
 
-  constructor (private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
+  constructor (private apiService: ApiService, private sharedService: SharedService, private meta: Meta, private router: Router) { }
 
   ngOnInit(): void {
     this.url = this.meta.getTag('name=api').content + 'images/';
@@ -97,21 +99,52 @@ export class HomepagePage implements OnInit {
     else this.detailDataCalendar = null;
   }
 
-  async onOpenCamera () {
-    console.log('Opening the camera');
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera
-    });
+  async onPermissionCamera () {
+    const status = await BarcodeScanner.checkPermission({ force: true });
+  //   console.log(status, 'status')
+  //   // return status.granted;
+  //   //   const permission = await Camera.checkPermissions();
+  // //   if (permission.camera != 'granted') {
+  // //     let dataPermission = await Camera.requestPermissions();
+  // //     if (dataPermission.camera === 'granted') this.onOpenCamera();
+  // //   } else {
+  // //     this.onOpenCamera();
+  // //   }
+    return status;
+  }
 
-    // image.webPath will contain a path that can be set as an image src.
-    // You can access the original file using image.path, which can be
-    // passed to the Filesystem API to read the raw data of the image,
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    var imageUrl = image.webPath;
-    console.log(imageUrl);
+  async onOpenCamera () {
+    try {
+      console.log(document.querySelector('.ionapp'));
+      const status = await this.onPermissionCamera();
+      if (status) {
+        this.sharedService.onCamera.next(true);
+        BarcodeScanner.hideBackground();
+        // html, body background: transparent
+        const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
+        // if the result has content
+        if (result.hasContent) {
+          this.router.navigate(['/event', result.content]);
+          this.sharedService.onCamera.next(false);
+        }
+        // const image = await Camera.getPhoto({
+        //   quality: 90,
+        //   allowEditing: true,
+        //   resultType: CameraResultType.Uri,
+        //   source: CameraSource.Camera
+        // });
+        // console.log('base64String' + image.base64String)
+        // console.log('dataUrl' + image.dataUrl);
+        // console.log('exif' + image.exif)
+        // console.log('format' + image.format)
+        // console.log('path' + image.path)
+        // console.log('saved' + image.saved)
+        // console.log('webPath' + image.webPath)
+      }
+    } catch (error) {
+      console.log(error, 'error');
+    }
+
 
   }
 

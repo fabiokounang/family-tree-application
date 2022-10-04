@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import HttpList from '../utils/http-endpoint';
 import { AlertController, ToastController } from "@ionic/angular";
 import { UserInterface } from "../interfaces/user.interface";
-
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,6 +10,7 @@ import { UserInterface } from "../interfaces/user.interface";
 export class SharedService {
   private apiHttp: string = '';
   private subHttp: any = HttpList;
+  onCamera: Subject<any> = new Subject();
 
   errGeneral: string = 'Something went wrong, please try again';
 

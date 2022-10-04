@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   ActionPerformed,
   PushNotificationSchema,
@@ -6,6 +6,8 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Platform } from '@ionic/angular';
+import { SharedService } from './services/shared.services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +15,22 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 
-export class AppComponent {
-  constructor (private platform: Platform) { }
+export class AppComponent implements OnInit, OnDestroy {
+  isCameraOpen: boolean = false;
+  subscription: Subscription;
+
+  constructor (private platform: Platform, private sharedService: SharedService) { }
 
   ngOnInit() {
     if(this.platform.is('mobileweb')) console.log('Web application starting...');
     else this.requestNotification();
+    this.subscription = this.sharedService.onCamera.subscribe((result) => {
+      this.isCameraOpen = result;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription && !this.subscription.closed) this.subscription.unsubscribe();
   }
 
   requestNotification () {
