@@ -9,5 +9,7 @@ export default {
   'master-calendar-active': 'api/calendar/user/active',
   'master-user-upload': 'api/user/uploadimage',
   'master-self-user': 'api/user/self',
-  'master-register-event': 'api/occasion/present'
+  'master-register-event': 'api/occasion/present',
+  'master-point-history': 'api/point/user/history',
+  'master-user-tokenfcm': 'api/user/fcm'
 }

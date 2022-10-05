@@ -31,6 +31,12 @@ ion-title {
   font-family: 'raleway-reguler';
 }
 
+body.scanner-active {
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */

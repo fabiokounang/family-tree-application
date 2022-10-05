@@ -93,6 +93,7 @@
       </ion-radio-group>
 
       <ion-item class="ion-margin-bottom ion-no-padding">
+        <ion-label>Date of birth</ion-label>
         <ion-input formControlName="date_of_birth" type="date"></ion-input>
         <ion-note *ngIf="signupForm.get('date_of_birth').hasError('minlength') && signupForm.get('date_of_birth').touched" slot="error">Date of birth required</ion-note>
       </ion-item>

@@ -13,6 +13,10 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/homepage/homepage.module').then( m => m.HomepagePageModule)
       },
       {
+        path: 'historypoint',
+        loadChildren: () => import('../../pages/historypoint/historypoint.module').then( m => m.HistorypointPageModule)
+      },
+      {
         path: 'tree',
         loadChildren: () => import('../../pages/tree/tree.module').then( m => m.TreePageModule)
       },

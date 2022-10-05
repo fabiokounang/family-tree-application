@@ -4,37 +4,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="user">
-  <ion-card class="bio">
-    <ion-card-header>
-      <div class="image-upload">
-        <img [src]="(url + user.image) || '/assets/images/profile-default.png'" />
-        <ion-button (click)="file.click()" class="ion-no-margin" fill="clear">Change Profile Picture</ion-button>
-        <input #file (change)="onUpload($event)" type="file" />
-      </div>
+<ion-content>
+  <ng-container *ngIf="user">
+    <ion-card class="bio">
+      <ion-card-header>
+        <div class="image-upload">
+          <img [src]="(url + user.image) || '/assets/images/profile-default.png'" />
+          <ion-button (click)="file.click()" class="ion-no-margin" fill="clear">Change Profile Picture</ion-button>
+          <input #file (change)="onUpload($event)" type="file" />
+        </div>
 
-      &nbsp;
-      <div>
-        <ion-card-subtitle>{{user.no_anggota}}</ion-card-subtitle>
-        <ion-text>{{user.first_name_latin | titlecase}} {{user.last_name_latin | titlecase}} ({{user.chinese_name}})</ion-text>
-        <p>Point : {{user.point | number}}</p>
-      </div>
-    </ion-card-header>
-  </ion-card>
-  <ion-list>
-    <ion-item routerLink="/profile-information" class="ion-no-padding">
-      <ion-icon name="person-outline"></ion-icon>
-      <ion-label>Profile Information</ion-label>
-    </ion-item>
-    <ion-item routerLink="/change-password" class="ion-no-padding">
-      <ion-icon name="lock-closed-outline"></ion-icon>
-      <ion-label>Change Password</ion-label>
-    </ion-item>
-    <!-- <ion-item routerLink="/change-theme" class="ion-no-padding">
-      <ion-icon name="color-palette-outline"></ion-icon>
-      <ion-label>Change Theme</ion-label>
-    </ion-item> -->
-  </ion-list>
-
-  <ion-button class="ion-margin" expand="block" (click)="onLogout()">Signout</ion-button>
+        &nbsp;
+        <div>
+          <ion-card-subtitle>{{user.no_anggota}}</ion-card-subtitle>
+          <ion-text>{{user.first_name_latin | titlecase}} {{user.last_name_latin | titlecase}} ({{user.chinese_name}})</ion-text>
+          <p>Point : {{user.point | number}}</p>
+        </div>
+      </ion-card-header>
+    </ion-card>
+    <ion-list>
+      <ion-item routerLink="/profile-information" class="ion-no-padding">
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-label>Profile Information</ion-label>
+      </ion-item>
+      <ion-item routerLink="/change-password" class="ion-no-padding">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <ion-label>Change Password</ion-label>
+      </ion-item>
+      <!-- <ion-item routerLink="/change-theme" class="ion-no-padding">
+        <ion-icon name="color-palette-outline"></ion-icon>
+        <ion-label>Change Theme</ion-label>
+      </ion-item> -->
+    </ion-list>
+    <ion-button class="ion-margin" expand="block" (click)="onLogout()">Signout</ion-button>
+  </ng-container>
+  <ion-spinner class="ion-margin-top ion-padding-top" *ngIf="loader && !user"></ion-spinner>
 </ion-content>

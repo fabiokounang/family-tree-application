@@ -60,11 +60,13 @@ export class SharedService {
     localStorage.removeItem('image');
   }
 
-  async callToast (message: string, position: 'top' | 'middle' | 'bottom', duration: number = 3000) {
+  async callToast (message: string, position: 'top' | 'middle' | 'bottom', duration: number = 3000, header = '') {
     const toast = await this.toastController.create({
+      header: header,
       message: message,
       duration: duration,
-      position: position
+      position: position,
+
     });
     await toast.present();
   }

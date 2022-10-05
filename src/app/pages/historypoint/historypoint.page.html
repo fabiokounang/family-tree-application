@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>History Point</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="refreshPage($event)" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="100">
+    <ion-refresher-content
+      pullingIcon="circles"
+      refreshingSpinner="circles"
+    ></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="!loader && points.length > 0">
+    <ion-item class="ion-no-padding" *ngFor="let point of points; let i = index">
+      <ion-label class="ion-text-wrap ion-padding-start">
+        <h3>
+          {{point.occasion.title | titlecase}}
+        </h3>
+        <ion-note>{{point.created_at | date: 'dd MMM yyyy'}}</ion-note>
+        <ion-note>&nbsp;{{point.created_at | date: 'HH:mm:ss a'}}</ion-note>
+      </ion-label>
+      <p class="ion-padding-end" [ngStyle]="{
+        color: point.occasion.type === 1 ? 'green' : 'red'
+      }">{{point.occasion.type === 1 ? '+' : ''}}{{point.point}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-spinner class="ion-margin-top ion-padding-top" *ngIf="loader"></ion-spinner>
+</ion-content>

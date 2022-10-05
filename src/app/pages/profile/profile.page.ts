@@ -14,6 +14,8 @@ import { SharedService } from 'src/app/services/shared.services';
 export class ProfilePage implements OnInit {
   user: any;
   url: string = '';
+  loader: boolean = false;
+
   constructor (private router: Router, private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
 
   ngOnInit() {
@@ -25,12 +27,15 @@ export class ProfilePage implements OnInit {
   }
 
   getUser () {
+    this.loader = true;
     this.apiService.connection('master-self-user').subscribe({
       next: (response: UserInterface) => {
         this.user = response;
+        this.loader = false;
       },
       error: ({ error }: HttpErrorResponse) => {
         this.sharedService.callAlert('Something went wrong', 'Please try again');
+        this.loader = false;
       },
       complete: () => {}
     });
