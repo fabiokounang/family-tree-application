@@ -14,7 +14,8 @@ import { SharedService } from '../../services/shared.services';
 export class SigninPage implements OnInit {
   loader: boolean = false;
   signinForm: FormGroup;
-
+  eye: string = 'eye-outline';
+  type: string = 'password';
   constructor (private apiService: ApiService, private sharedService: SharedService, private router: Router) { }
 
   ngOnInit() {
@@ -50,6 +51,11 @@ export class SigninPage implements OnInit {
     } else {
       this.sharedService.callAlert('Bad request', 'Input not valid');
     }
+  }
+
+  onEye () {
+    this.eye = this.eye === 'eye-outline' ? 'eye-off-outline' : 'eye-outline';
+    this.type = this.eye === 'eye-outline' ? 'password' : 'text';
   }
 
 }

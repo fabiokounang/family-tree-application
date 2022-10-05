@@ -8,15 +8,22 @@
       <ion-item class="ion-margin-bottom ion-no-padding">
         <ion-label position="floating">Username</ion-label>
         <ion-input formControlName="username" type="text"></ion-input>
+        <ion-note *ngIf="signinForm.get('username').hasError('required') && signinForm.get('username').touched" slot="error">Username required</ion-note>
+        <ion-note *ngIf="signinForm.get('username').hasError('maxlength') && signinForm.get('username').touched" slot="error">Username max 30 characters</ion-note>
       </ion-item>
 
       <ion-item class="ion-margin-bottom ion-no-padding">
         <ion-label position="floating">Password</ion-label>
-        <ion-input formControlName="password" type="password"></ion-input>
+        <ion-input formControlName="password" [type]="type"></ion-input>
+        <ion-icon (click)="onEye()" [name]="eye"></ion-icon>
+        <ion-note *ngIf="signinForm.get('password').hasError('required') && signinForm.get('password').touched" slot="error">Password required</ion-note>
+        <ion-note *ngIf="signinForm.get('password').hasError('minlength') && signinForm.get('password').touched" slot="error">Password min 6 characters</ion-note>
+        <ion-note *ngIf="signinForm.get('password').hasError('maxlength') && signinForm.get('password').touched" slot="error">Password max 16 characters</ion-note>
       </ion-item>
 
       <ng-container *ngIf="!loader">
         <ion-button type="submit" [disabled]="signinForm.invalid" class="ion-margin-top" color="primary">Signin</ion-button>
+        <br>
         <small class="reg">
           Doesn't have an account ?
           <a routerLink="/signup">Signup here</a>

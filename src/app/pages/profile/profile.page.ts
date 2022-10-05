@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
         this.user = response;
       },
       error: ({ error }: HttpErrorResponse) => {
-        console.log(error);
+        this.sharedService.callAlert('Something went wrong', 'Please try again');
       },
       complete: () => {}
     });
@@ -42,7 +42,18 @@ export class ProfilePage implements OnInit {
   }
 
   onUpload (file: any) {
-    const photo = file.target.files[0];
+    const maxSize = 2 * 1024 * 1024;
+    const photo: File = file.target.files[0];
+
+    if (!['image/png', 'image/jpg', 'image/jpeg'].includes(photo.type)) {
+      this.sharedService.callAlert('File must be image format', 'PNG / JPEG / JPG');
+      return;
+    }
+    if (photo.size > maxSize) {
+      this.sharedService.callAlert('File size is too large', 'Please pick another smaller file');
+      return;
+    }
+
     const formData = new FormData();
     formData.append("image", photo, photo.name);
 
@@ -52,7 +63,7 @@ export class ProfilePage implements OnInit {
         this.sharedService.callToast('Success upload image', 'bottom');
       },
       error: ({ error }: HttpErrorResponse) => {
-        console.log(error);
+        this.sharedService.callAlert(!error.error ? error : error.error);
       },
       complete: () => {}
     });

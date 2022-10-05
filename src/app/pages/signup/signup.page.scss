@@ -25,6 +25,13 @@ ion-content {
       ion-note {
         font-family: 'raleway-semibold';
       }
+
+      ion-icon {
+        position: absolute;
+        right: 8px;
+        bottom: 7px;
+        z-index: 1000;
+      }
     }
 
     ion-button {

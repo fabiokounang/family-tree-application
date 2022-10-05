@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="refreshPage($event)" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="100">
+    <ion-refresher-content
+      pullingIcon="circles"
+      refreshingSpinner="circles"
+    ></ion-refresher-content>
+  </ion-refresher>
+
   <ion-card *ngIf="user" class="bio">
     <ion-card-header>
       <!-- <img [src]="url + user.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" /> -->

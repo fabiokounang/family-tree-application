@@ -22,6 +22,10 @@ export class SignupPage implements OnInit {
   provinces: DropdownInterface[] = [];
   cities: any[] = [];
   selectedCities: any[] = [];
+  eyePassword: string = 'eye-outline';
+  eyeConfirmationPassword: string = 'eye-outline';
+  typePassword: string = 'password';
+  typeConfirmationPassword: string = 'password';
 
   constructor (private apiService: ApiService, private sharedService: SharedService, private router: Router) { }
 
@@ -125,6 +129,11 @@ export class SignupPage implements OnInit {
     } else {
       this.sharedService.callAlert('Bad request', 'Input not valid');
     }
+  }
+
+  onEye (varEye, varType) {
+    this[varEye] = this[varEye] === 'eye-outline' ? 'eye-off-outline' : 'eye-outline';
+    this[varType] = this[varEye] === 'eye-outline' ? 'password' : 'text';
   }
 
 }

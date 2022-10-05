@@ -8,11 +8,9 @@
   <ion-card class="bio">
     <ion-card-header>
       <div class="image-upload">
-        <label for="file-input">
-          <img [src]="url + user.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" />
-        </label>
-
-        <input (change)="onUpload($event)" id="file-input" type="file" />
+        <img [src]="(url + user.image) || '/assets/images/profile-default.png'" />
+        <ion-button (click)="file.click()" class="ion-no-margin" fill="clear">Change Profile Picture</ion-button>
+        <input #file (change)="onUpload($event)" type="file" />
       </div>
 
       &nbsp;

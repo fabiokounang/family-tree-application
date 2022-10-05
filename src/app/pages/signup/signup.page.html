@@ -22,15 +22,17 @@
 
       <ion-item class="ion-margin-bottom ion-no-padding">
         <ion-label position="floating">Password</ion-label>
-        <ion-input formControlName="password" type="password"></ion-input>
+        <ion-input formControlName="password" [type]="typePassword"></ion-input>
+        <ion-icon (click)="onEye('eyePassword', 'typePassword')" [name]="eyePassword"></ion-icon>
         <ion-note *ngIf="signupForm.get('password').hasError('required') && signupForm.get('password').touched" slot="error">Password required</ion-note>
         <ion-note *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched" slot="error">Password min 6 characters</ion-note>
-        <ion-note *ngIf="signupForm.get('password').hasError('maxlength') && signupForm.get('password').touched" slot="error">Password max 16 cahracters</ion-note>
+        <ion-note *ngIf="signupForm.get('password').hasError('maxlength') && signupForm.get('password').touched" slot="error">Password max 16 characters</ion-note>
       </ion-item>
 
       <ion-item class="ion-margin-bottom ion-no-padding">
         <ion-label position="floating">Confirmation Password</ion-label>
-        <ion-input formControlName="confirmation_password" type="password"></ion-input>
+        <ion-input formControlName="confirmation_password" [type]="typeConfirmationPassword"></ion-input>
+        <ion-icon (click)="onEye('eyeConfirmationPassword', 'typeConfirmationPassword')" [name]="eyeConfirmationPassword"></ion-icon>
         <ion-note *ngIf="signupForm.get('confirmation_password').hasError('required') && signupForm.get('confirmation_password').touched" slot="error">Confirmation Password required</ion-note>
         <ion-note *ngIf="signupForm.get('confirmation_password').hasError('minlength') && signupForm.get('confirmation_password').touched" slot="error">Confirmation Password min 6 characters</ion-note>
         <ion-note *ngIf="signupForm.get('confirmation_password').hasError('maxlength') && signupForm.get('confirmation_password').touched" slot="error">Confirmation Password max 16 cahracters</ion-note>
@@ -136,6 +138,7 @@
 
       <ng-container *ngIf="!loader">
         <ion-button [disabled]="signupForm.invalid" type="submit" class="ion-margin-top" color="primary">Signup</ion-button>
+        <br>
         <small class="reg">
           Already have an account ?
           <a routerLink="/signin">Signin here</a>

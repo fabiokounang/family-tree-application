@@ -12,8 +12,13 @@ ion-content {
       flex-direction: column;
       justify-content: center;
 
-      div.image-upload>input {
-        display: none;
+      div.image-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        input {
+          display: none;
+        }
       }
 
       ion-card-subtitle {
@@ -28,8 +33,12 @@ ion-content {
         object-fit: cover;
       }
 
+      ion-button {
+        font-size: 12px;
+        font-family: 'raleway-semibold';
+      }
+
       div {
-        padding-top: 1rem;
         text-align: center;
         p {
           margin: 0;

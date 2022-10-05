@@ -24,13 +24,13 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if(this.platform.is('mobileweb')) console.log('Web application starting...');
     else this.requestNotification();
-    this.subscription = this.sharedService.onCamera.subscribe((result) => {
-      this.isCameraOpen = result;
-    });
+    // this.subscription = this.sharedService.onCamera.subscribe((result) => {
+    //   this.isCameraOpen = result;
+    // });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription && !this.subscription.closed) this.subscription.unsubscribe();
+    // if (this.subscription && !this.subscription.closed) this.subscription.unsubscribe();
   }
 
   requestNotification () {

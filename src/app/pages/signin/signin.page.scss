@@ -24,10 +24,17 @@ ion-content {
 
       ion-item {
         width: 100%;
-
+        position: relative;
         ion-label {
           font-size: 12px;
           font-family: 'raleway-reguler';
+        }
+
+        ion-icon {
+          position: absolute;
+          right: 8px;
+          bottom: 7px;
+          z-index: 1000;
         }
       }
 

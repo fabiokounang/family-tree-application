@@ -12,6 +12,12 @@ import { SharedService } from 'src/app/services/shared.services';
 export class ChangePasswordPage implements OnInit {
   loader: boolean = false;
   changePasswordForm: FormGroup;
+  eyeOldPassword: string = 'eye-outline';
+  typeOldPassword: string = 'password';
+  eyeNewPassword: string = 'eye-outline';
+  typeNewPassword: string = 'password';
+  eyeConfirmationPassword: string = 'eye-outline';
+  typeConfirmationPassword: string = 'password';
 
   constructor (private apiService: ApiService, private sharedService: SharedService) {}
 
@@ -30,21 +36,29 @@ export class ChangePasswordPage implements OnInit {
   onChangePassword () {
     if (this.changePasswordForm.valid) {
       this.loader = true;
+      this.changePasswordForm.disable();
       this.apiService.connection('master-change-password', this.changePasswordForm.value).subscribe({
         next: (response: any) => {
+          this.changePasswordForm.enable();
           this.loader = false;
           this.changePasswordForm.reset();
           this.sharedService.callToast('Success change password', 'bottom');
         },
         error: (error: HttpErrorResponse) => {
           this.loader = false;
-          console.log(error);
+          this.changePasswordForm.enable();
+          this.sharedService.callAlert(!error.error ? error : error.error);
         },
         complete: () => {}
       });
     } else {
 
     }
+  }
+
+  onEye (varEye, varType) {
+    this[varEye] = this[varEye] === 'eye-outline' ? 'eye-off-outline' : 'eye-outline';
+    this[varType] = this[varEye] === 'eye-outline' ? 'password' : 'text';
   }
 
 }

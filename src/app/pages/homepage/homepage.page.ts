@@ -44,6 +44,14 @@ export class HomepagePage implements OnInit {
     this.getCalendar();
   }
 
+  async refreshPage (event) {
+    setTimeout(() => {
+      this.getUser();
+      this.getCalendar();
+      event.target.complete();
+    }, 2000);
+  }
+
   getUser () {
     this.apiService.connection('master-self-user').subscribe({
       next: (response: UserInterface) => {
@@ -68,7 +76,6 @@ export class HomepagePage implements OnInit {
         const d = `${this.months[this.month - 1]} 1, ${year} 00:00:01`;
         const day = new Date(d).getDay();
         this.emptyDay = Array.from(Array(day).keys());
-        console.log(this.calendar.calendar[this.month][this.today]);
       },
       error: ({ error }: HttpErrorResponse) => {
         this.loader = false;
@@ -101,62 +108,25 @@ export class HomepagePage implements OnInit {
 
   async onPermissionCamera () {
     const status = await BarcodeScanner.checkPermission({ force: true });
-  //   console.log(status, 'status')
-  //   // return status.granted;
-  //   //   const permission = await Camera.checkPermissions();
-  // //   if (permission.camera != 'granted') {
-  // //     let dataPermission = await Camera.requestPermissions();
-  // //     if (dataPermission.camera === 'granted') this.onOpenCamera();
-  // //   } else {
-  // //     this.onOpenCamera();
-  // //   }
     return status;
   }
 
   async onOpenCamera () {
     try {
-      console.log(document.querySelector('.ionapp'));
       const status = await this.onPermissionCamera();
       if (status) {
-        this.sharedService.onCamera.next(true);
+        const ionApp = document.querySelector('ion-app');
+        ionApp.classList.add('scanner-ui');
         BarcodeScanner.hideBackground();
-        // html, body background: transparent
-        const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
-        // if the result has content
+        const result = await BarcodeScanner.startScan();
         if (result.hasContent) {
           this.router.navigate(['/event', result.content]);
-          this.sharedService.onCamera.next(false);
+          ionApp.classList.remove('scanner-ui');
         }
-        // const image = await Camera.getPhoto({
-        //   quality: 90,
-        //   allowEditing: true,
-        //   resultType: CameraResultType.Uri,
-        //   source: CameraSource.Camera
-        // });
-        // console.log('base64String' + image.base64String)
-        // console.log('dataUrl' + image.dataUrl);
-        // console.log('exif' + image.exif)
-        // console.log('format' + image.format)
-        // console.log('path' + image.path)
-        // console.log('saved' + image.saved)
-        // console.log('webPath' + image.webPath)
       }
     } catch (error) {
       console.log(error, 'error');
     }
-
-
-  }
-
-  onOpenFormEvent (calendar, month, day) {
-    // if (calendar.calendar[month][day] && calendar.calendar[month][day].length > 0) {
-    //   this.dialog.open(CalendarEventComponent, {
-    //     width: '900px',
-    //     data: calendar.calendar[month][day]
-    //   })
-    // } else {
-    //   this.apiService.callSnack('No event', 'Dismiss');
-    // }
   }
 
   changeMonth (num: number) {
