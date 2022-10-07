@@ -8,10 +8,7 @@ import { Subject } from 'rxjs';
 })
 
 export class SharedService {
-  private apiHttp: string = '';
-  private subHttp: any = HttpList;
-  onCamera: Subject<any> = new Subject();
-
+  onChangeMonth: Subject<any> = new Subject();
   errGeneral: string = 'Something went wrong, please try again';
 
   constructor (private toastController: ToastController, private alertController: AlertController) {}

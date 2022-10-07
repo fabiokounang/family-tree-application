@@ -41,7 +41,7 @@
 
   <ion-card class="event" *ngIf="calendar">
     <ion-card-header class="ion-no-margin">
-      <ion-card-subtitle>Today's Event ({{calendar.calendar[nowMonth][today].length}})</ion-card-subtitle>
+      <ion-card-subtitle>Today's Event ({{calendar.calendar[nowMonth][today].length > 0 ? calendar.calendar[nowMonth][today].length : 0}})</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ion-list *ngIf="calendar.calendar[nowMonth][today].length > 0" class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
@@ -79,14 +79,10 @@
       </span>
       <span
         class="day"
-        appWeekend
-        [year]="calendar.year"
-        [month]="month"
-        [day]="+day"
-        (click)="setOpen(true, calendar.calendar[month][day])"
-        [ngClass]="{ isEvent: calendar.calendar[month][day].length > 0 }"
-        [event]="calendar.calendar[month][day].length"
-        *ngFor="let day of objectKeys(calendar.calendar[month])">
+        (click)="setOpen(true, calendar.calendar[month][day].events)"
+        [ngStyle]="{ color: calendar.calendar[month][day].color, 'font-weight': calendar.calendar[month][day].color ? 'bold' : '' }"
+        *ngFor="let day of objectKeys(calendar.calendar[month])"
+      >
         {{day}}
       </span>
 

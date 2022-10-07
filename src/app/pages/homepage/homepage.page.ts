@@ -41,6 +41,8 @@ export class HomepagePage implements OnInit {
   detailDataCalendar: any = [];
   token: string = '';
   ionApp: HTMLElement = document.querySelector('ion-app');
+  body: HTMLElement = document.querySelector('body');
+  date = new Date;
   constructor (private apiService: ApiService, private sharedService: SharedService, private meta: Meta, private router: Router, private platform: Platform) { }
 
   ngOnInit(): void {
@@ -55,9 +57,7 @@ export class HomepagePage implements OnInit {
 
   listenSubscription () {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      BarcodeScanner.stopScan();
-      BarcodeScanner.showBackground();
-      this.ionApp.classList.remove('scanner-ui');
+      this.removeUtil();
     });
   }
 
@@ -94,10 +94,7 @@ export class HomepagePage implements OnInit {
     this.apiService.connection('master-calendar-active').subscribe({
       next: (response: any) => {
         this.calendar = response.value;
-        const year = new Date().getFullYear();
-        const d = `${this.months[this.month - 1]} 1, ${year} 00:00:01`;
-        const day = new Date(d).getDay();
-        this.emptyDay = Array.from(Array(day).keys());
+        this.processEmptyDay();
       },
       error: ({ error }: HttpErrorResponse) => {
         this.loader = false;
@@ -107,6 +104,13 @@ export class HomepagePage implements OnInit {
         this.loader = false;
       }
     });
+  }
+
+  processEmptyDay () {
+    const year = new Date().getFullYear();
+    const d = `${this.months[this.month - 1]} 1, ${year} 00:00:01`;
+    const day = new Date(d).getDay();
+    this.emptyDay = Array.from(Array(day).keys());
   }
 
   onDetailEvent (event) {
@@ -136,28 +140,37 @@ export class HomepagePage implements OnInit {
   async onOpenCamera () {
     try {
       if (await this.onPermissionCamera()) {
-        this.ionApp.classList.add('scanner-ui');
-        BarcodeScanner.hideBackground();
+        this.addUtil();
         const result = await BarcodeScanner.startScan();
         if (result && result.hasContent) {
           this.router.navigate(['/event', result.content]);
-          this.ionApp.classList.remove('scanner-ui');
+          this.removeUtil();
         } else {
-          BarcodeScanner.showBackground();
-          BarcodeScanner.stopScan();
-          this.ionApp.classList.remove('scanner-ui');
+          this.removeUtil();
         }
       }
     } catch (error) {
-      BarcodeScanner.showBackground();
-      BarcodeScanner.stopScan();
-      this.ionApp.classList.remove('scanner-ui');
+      this.removeUtil();
     }
+  }
+
+  addUtil () {
+    BarcodeScanner.hideBackground();
+    this.ionApp.classList.add('scanner-ui');
+    this.body.classList.add('scanner-active');
+  }
+
+  removeUtil () {
+    BarcodeScanner.showBackground();
+    BarcodeScanner.stopScan();
+    this.ionApp.classList.remove('scanner-ui');
+    this.body.classList.remove('scanner-active');
   }
 
   changeMonth (num: number) {
     if (this.month + num > 0 && this.month + num <= 12) this.month = this.month + num;
     this.nowMonth = this.month;
+    this.processEmptyDay();
   }
 
   requestNotification () {
@@ -205,5 +218,4 @@ export class HomepagePage implements OnInit {
       }
     })
   }
-
 }
