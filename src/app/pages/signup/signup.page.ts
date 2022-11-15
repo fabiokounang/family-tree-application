@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@capacitor/core';
 import { map } from 'rxjs/operators';
 
@@ -17,6 +17,7 @@ import { DropdownInterface } from '../../interfaces/dropdown.interface';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
+  @ViewChild('inputPassword') inputPassword: ElementRef<any>;
   loader: boolean = false;
   signupForm: FormGroup;
   provinces: DropdownInterface[] = [];
@@ -26,7 +27,7 @@ export class SignupPage implements OnInit {
   eyeConfirmationPassword: string = 'eye-outline';
   typePassword: string = 'password';
   typeConfirmationPassword: string = 'password';
-
+  radioSelected: number = 1;
   constructor (private apiService: ApiService, private sharedService: SharedService, private router: Router) { }
 
   ngOnInit() {
@@ -37,24 +38,41 @@ export class SignupPage implements OnInit {
 
   makeForm () {
     this.signupForm = new FormGroup({
-      username: new FormControl(null, [Validators.required, Validators.maxLength(30)]),
+      fullname: new FormControl(null, [Validators.required]),
+      nik: new FormControl(null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
-      confirmation_password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
+      confirmation_password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), this.checkPassword.bind(this)]),
       gender: new FormControl(null, [Validators.required]),
-      first_name_latin: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
-      last_name_latin: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
-      chinese_name: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
-      life_status: new FormControl(1, [Validators.required]),
-      address: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
-      date_of_birth: new FormControl(null, [Validators.required]),
+      // first_name_latin: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
+      // last_name_latin: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
+      // chinese_name: new FormControl(null, [Validators.maxLength(200)]),
+      // life_status: new FormControl(1, [Validators.required]),
+      // address: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
+      // date_of_birth: new FormControl(null, [Validators.required]),
       place_of_birth: new FormControl(null, [Validators.required]),
       city_of_residence: new FormControl({ value: null, disabled: true }, [Validators.required]),
-      phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(14)]),
-      wechat: new FormControl(null, [Validators.minLength(10), Validators.maxLength(14)]),
-      postal_address: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
-      remark: new FormControl(null)
+      // phone: new FormControl(null, [Validators.required, Validators.minLength(10), Validators.maxLength(14)]),
+      // wechat: new FormControl(null, [Validators.minLength(10), Validators.maxLength(14)]),
+      // postal_address: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+      // remark: new FormControl(null)
     });
+  }
+
+  checkPassword (control: FormControl) {
+    if (this.signupForm) {
+      if (control.value != this.signupForm.value.password) {
+        return {
+          mismatch: 'Confirmation password not match with password'
+        }
+      } else {
+        return null;
+      }
+    }
+  }
+
+  onRadioSelected (event) {
+    this.radioSelected = event.target.value;
   }
 
   getAllProvince () {

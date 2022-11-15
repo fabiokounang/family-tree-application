@@ -16,30 +16,31 @@ export class SharedService {
   saveToLocalStorage (user: UserInterface) {
     localStorage.setItem('_id', user._id);
     localStorage.setItem('token', user.token);
-    localStorage.setItem('username', user.username);
-    localStorage.setItem('first_name_latin', user.first_name_latin);
-    localStorage.setItem('last_name_latin', user.last_name_latin);
-    localStorage.setItem('chinese_name', user.chinese_name);
-    localStorage.setItem('no_anggota', user.no_anggota);
+    localStorage.setItem('fullname', user.fullname);
+    localStorage.setItem('email', user.email);
     localStorage.setItem('status', user.status);
-    localStorage.setItem('point', String(user.point));
-    localStorage.setItem('remark', user.remark);
-    localStorage.setItem('image', user.image);
+    // localStorage.setItem('last_name_latin', user.last_name_latin);
+    // localStorage.setItem('chinese_name', user.chinese_name);
+    // localStorage.setItem('no_anggota', user.no_anggota);
+    // localStorage.setItem('point', String(user.point));
+    // localStorage.setItem('remark', user.remark);
+    // localStorage.setItem('image', user.image);
   }
 
   getLocalStorage () {
     return {
       _id: localStorage.getItem('_id'),
       token: localStorage.getItem('token'),
-      username: localStorage.getItem('username'),
-      first_name_latin: localStorage.getItem('first_name_latin'),
-      last_name_latin: localStorage.getItem('last_name_latin'),
-      chinese_name: localStorage.getItem('chinese_name'),
-      no_anggota: localStorage.getItem('no_anggota'),
+      fullname: localStorage.getItem('fullname'),
+      email: localStorage.getItem('email'),
+      // first_name_latin: localStorage.getItem('first_name_latin'),
+      // last_name_latin: localStorage.getItem('last_name_latin'),
+      // chinese_name: localStorage.getItem('chinese_name'),
+      // no_anggota: localStorage.getItem('no_anggota'),
       status: localStorage.getItem('status'),
-      point: localStorage.getItem('point'),
-      remark: localStorage.getItem('remark'),
-      image: localStorage.getItem('image')
+      // point: localStorage.getItem('point'),
+      // remark: localStorage.getItem('remark'),
+      // image: localStorage.getItem('image')
     }
   }
 

@@ -1,36 +1,46 @@
 <ion-content direction="xy" class="ion-padding-horizontal">
   <form (ngSubmit)="onSignin()" [formGroup]="signinForm">
     <ion-grid>
-      <ion-text color="primary">
-        <h1>Family Tree</h1>
+      <ion-text color="main">
+        <h1>Masuk</h1>
       </ion-text>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Username</ion-label>
-        <ion-input formControlName="username" type="text"></ion-input>
-        <ion-note *ngIf="signinForm.get('username').hasError('required') && signinForm.get('username').touched" slot="error">Username required</ion-note>
-        <ion-note *ngIf="signinForm.get('username').hasError('maxlength') && signinForm.get('username').touched" slot="error">Username max 30 characters</ion-note>
-      </ion-item>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">Alamat Email</ion-label>
+          <ion-input formControlName="email" type="text"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signinForm.get('email').hasError('required') && signinForm.get('email').touched">
+          <small>Email wajib diisi</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signinForm.get('email').hasError('maxlength') && signinForm.get('email').touched">
+          <small>Email tidak valid</small>
+        </ion-note>
+      </div>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Password</ion-label>
-        <ion-input formControlName="password" [type]="type"></ion-input>
-        <ion-icon (click)="onEye()" [name]="eye"></ion-icon>
-        <ion-note *ngIf="signinForm.get('password').hasError('required') && signinForm.get('password').touched" slot="error">Password required</ion-note>
-        <ion-note *ngIf="signinForm.get('password').hasError('minlength') && signinForm.get('password').touched" slot="error">Password min 6 characters</ion-note>
-        <ion-note *ngIf="signinForm.get('password').hasError('maxlength') && signinForm.get('password').touched" slot="error">Password max 16 characters</ion-note>
-      </ion-item>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="password" [type]="type"></ion-input>
+          <ion-icon (click)="onEye()" [name]="eye"></ion-icon>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signinForm.get('password').hasError('required') && signinForm.get('password').touched">
+          <small>Password wajib diisi</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signinForm.get('password').hasError('minlength') && signinForm.get('password').touched">
+          <small>Password minimal 6 karakter</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signinForm.get('password').hasError('maxlength') && signinForm.get('password').touched">
+          <small>Password maksimal 16 karakter</small>
+        </ion-note>
+      </div>
 
       <ng-container *ngIf="!loader">
-        <ion-button type="submit" [disabled]="signinForm.invalid" class="ion-margin-top" color="primary">Signin</ion-button>
-        <br>
-        <small class="reg">
-          Doesn't have an account ?
-          <a routerLink="/signup">Signup here</a>
-        </small>
+        <ion-button type="submit" [disabled]="signinForm.invalid" class="ion-margin-top" color="main">Signin</ion-button>
+        <small class="reg ion-margin-top">Belum punya akun ? <a routerLink="/signup">Daftar disini</a></small>
       </ng-container>
 
-      <ion-spinner *ngIf="loader"></ion-spinner>
+      <ion-spinner *ngIf="loader" class="ion-margin-top"></ion-spinner>
     </ion-grid>
   </form>
 </ion-content>

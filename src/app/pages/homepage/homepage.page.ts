@@ -47,7 +47,7 @@ export class HomepagePage implements OnInit {
 
   ngOnInit(): void {
     this.fillData();
-    if (!this.platform.is('mobileweb')) this.requestNotification();
+    if (!this.platform.platforms().includes('desktop') && !this.platform.is('mobileweb')) this.requestNotification();
     this.listenSubscription();
   }
 
@@ -94,6 +94,7 @@ export class HomepagePage implements OnInit {
     this.apiService.connection('master-calendar-active').subscribe({
       next: (response: any) => {
         this.calendar = response.value;
+        console.log(this.calendar.calendar[this.nowMonth][this.today]);
         this.processEmptyDay();
       },
       error: ({ error }: HttpErrorResponse) => {

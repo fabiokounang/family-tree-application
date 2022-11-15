@@ -11,5 +11,8 @@ export default {
   'master-self-user': 'api/user/self',
   'master-register-event': 'api/occasion/present',
   'master-point-history': 'api/point/user/history',
-  'master-user-tokenfcm': 'api/user/fcm'
+  'master-user-tokenfcm': 'api/user/fcm',
+  'master-user': 'api/user/user',
+  'master-tree': 'api/tree',
+  'master-tree-create': 'api/tree/create'
 }

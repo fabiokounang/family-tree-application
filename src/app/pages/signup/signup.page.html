@@ -1,152 +1,147 @@
 <ion-content class="ion-padding-horizontal">
+  <ion-header class="ion-no-border ion-padding-top">
+    <ion-toolbar color="none">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/signin" color="main"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
   <form (ngSubmit)="onSignup()" [formGroup]="signupForm">
     <ion-grid>
-      <ion-text color="primary">
-        <h1>Family Tree</h1>
+      <ion-text color="main">
+        <h1>Daftar Baru</h1>
       </ion-text>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Username</ion-label>
-        <ion-input formControlName="username" type="text"></ion-input>
-        <ion-note *ngIf="signupForm.get('username').hasError('required') && signupForm.get('username').touched" slot="error">Username required</ion-note>
-        <ion-note *ngIf="signupForm.get('username').hasError('maxlength') && signupForm.get('username').touched" slot="error">Username max 30 characters</ion-note>
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">E-mail</ion-label>
-        <ion-input formControlName="email" type="email"></ion-input>
-        <ion-note *ngIf="signupForm.get('email').hasError('required') && signupForm.get('email').touched" slot="error">Email required</ion-note>
-        <ion-note *ngIf="signupForm.get('email').hasError('email') && signupForm.get('email').touched" slot="error">Email not valid</ion-note>
-
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Password</ion-label>
-        <ion-input formControlName="password" [type]="typePassword"></ion-input>
-        <ion-icon (click)="onEye('eyePassword', 'typePassword')" [name]="eyePassword"></ion-icon>
-        <ion-note *ngIf="signupForm.get('password').hasError('required') && signupForm.get('password').touched" slot="error">Password required</ion-note>
-        <ion-note *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched" slot="error">Password min 6 characters</ion-note>
-        <ion-note *ngIf="signupForm.get('password').hasError('maxlength') && signupForm.get('password').touched" slot="error">Password max 16 characters</ion-note>
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Confirmation Password</ion-label>
-        <ion-input formControlName="confirmation_password" [type]="typeConfirmationPassword"></ion-input>
-        <ion-icon (click)="onEye('eyeConfirmationPassword', 'typeConfirmationPassword')" [name]="eyeConfirmationPassword"></ion-icon>
-        <ion-note *ngIf="signupForm.get('confirmation_password').hasError('required') && signupForm.get('confirmation_password').touched" slot="error">Confirmation Password required</ion-note>
-        <ion-note *ngIf="signupForm.get('confirmation_password').hasError('minlength') && signupForm.get('confirmation_password').touched" slot="error">Confirmation Password min 6 characters</ion-note>
-        <ion-note *ngIf="signupForm.get('confirmation_password').hasError('maxlength') && signupForm.get('confirmation_password').touched" slot="error">Confirmation Password max 16 cahracters</ion-note>
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">First Name</ion-label>
-        <ion-input formControlName="first_name_latin" type="text"></ion-input>
-        <ion-note *ngIf="signupForm.get('first_name_latin').hasError('required') && signupForm.get('first_name_latin').touched" slot="error">First name required</ion-note>
-        <ion-note *ngIf="signupForm.get('first_name_latin').hasError('maxlength') && signupForm.get('first_name_latin').touched" slot="error">First name max 200 characters</ion-note>
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Last Name</ion-label>
-        <ion-input formControlName="last_name_latin" type="text"></ion-input>
-        <ion-note *ngIf="signupForm.get('last_name_latin').hasError('required') && signupForm.get('last_name_latin').touched" slot="error">Last name required</ion-note>
-        <ion-note *ngIf="signupForm.get('last_name_latin').hasError('maxlength') && signupForm.get('last_name_latin').touched" slot="error">Last name max 200 characters</ion-note>
-
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Chinese Name</ion-label>
-        <ion-input formControlName="chinese_name" type="text"></ion-input>
-        <ion-note *ngIf="signupForm.get('chinese_name').hasError('required') && signupForm.get('chinese_name').touched" slot="error">Chinese name required</ion-note>
-        <ion-note *ngIf="signupForm.get('chinese_name').hasError('maxlength') && signupForm.get('chinese_name').touched" slot="error">Chinese name max 200 characters</ion-note>
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Phone Number (08xxxxxxxx)</ion-label>
-        <ion-input formControlName="phone" type="tel"></ion-input>
-        <ion-note *ngIf="signupForm.get('phone').hasError('required') && signupForm.get('phone').touched" slot="error">Phone required</ion-note>
-        <ion-note *ngIf="signupForm.get('phone').hasError('minlength') && signupForm.get('phone').touched" slot="error">Phone min length 10 numbers</ion-note>
-        <ion-note *ngIf="signupForm.get('phone').hasError('maxlength') && signupForm.get('phone').touched" slot="error">Phone max length 14 numbers</ion-note>
-      </ion-item>
-
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Wechat (08xxxxxxxx)</ion-label>
-        <ion-input formControlName="wechat" type="tel"></ion-input>
-        <ion-note *ngIf="signupForm.get('wechat').hasError('minlength') && signupForm.get('wechat').touched" slot="error">Wechat min length 10 numbers</ion-note>
-        <ion-note *ngIf="signupForm.get('wechat').hasError('maxlength') && signupForm.get('wechat').touched" slot="error">Wechat max length 14 numbers</ion-note>
-      </ion-item>
-
-      <ion-radio-group formControlName="gender" class="ion-margin-bottom">
-        <ion-list-header class="ion-no-padding">
-          <ion-label>Gender</ion-label>
-        </ion-list-header>
-
-        <ion-item class="ion-no-padding">
-          <ion-label>Male</ion-label>
-          <ion-radio slot="start" [value]="1"></ion-radio>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">Nama Lengkap</ion-label>
+          <ion-input formControlName="fullname" type="text"></ion-input>
         </ion-item>
+        <ion-note color="danger" *ngIf="signupForm.get('fullname').hasError('required') && signupForm.get('fullname').touched">
+          <small>Fullname wajib diisi</small>
+        </ion-note>
+      </div>
 
-        <ion-item class="ion-no-padding">
-          <ion-label>Female</ion-label>
-          <ion-radio slot="start" [value]="2"></ion-radio>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">No NIK</ion-label>
+          <ion-input maxlength="16" formControlName="nik" type="tel"></ion-input>
         </ion-item>
-        <ion-note *ngIf="signupForm.get('gender').hasError('minlength') && signupForm.get('gender').touched" slot="error">Gender required</ion-note>
-      </ion-radio-group>
+        <ion-note color="danger" *ngIf="signupForm.get('nik').hasError('required') && signupForm.get('nik').touched">
+          <small>NIK wajib diisi</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('nik').hasError('minlength') || signupForm.get('nik').hasError('maxlength') && signupForm.get('nik').touched">
+          <small>NIK wajib 16 digit angka</small>
+        </ion-note>
+      </div>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label>Date of birth</ion-label>
-        <ion-input formControlName="date_of_birth" type="date"></ion-input>
-        <ion-note *ngIf="signupForm.get('date_of_birth').hasError('minlength') && signupForm.get('date_of_birth').touched" slot="error">Date of birth required</ion-note>
-      </ion-item>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">Alamat Email</ion-label>
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signupForm.get('email').hasError('required') && signupForm.get('email').touched">
+          <small>Email wajib diisi</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('email').hasError('email') && signupForm.get('email').touched">
+          <small>Email tidak valid</small>
+        </ion-note>
+      </div>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label>Select Province</ion-label>
-        <ion-select (ionChange)="onSelectProvince($event)" formControlName="place_of_birth">
-          <ion-select-option *ngFor="let province of provinces" [value]="province.id">
-            {{province.name | titlecase}}
-          </ion-select-option>
-        </ion-select>
-        <ion-note *ngIf="signupForm.get('place_of_birth').hasError('required') && signupForm.get('place_of_birth').touched" slot="error">Place of birth required</ion-note>
-      </ion-item>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">Buat Password</ion-label>
+          <ion-input formControlName="password" [type]="typePassword"></ion-input>
+          <ion-icon (click)="onEye('eyePassword', 'typePassword')" [name]="eyePassword"></ion-icon>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signupForm.get('password').hasError('required') && signupForm.get('password').touched">
+          <small>Password wajib diisi</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('password').hasError('minlength') && signupForm.get('password').touched">
+          <small>Password minimal 6 karakter</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('password').hasError('maxlength') && signupForm.get('password').touched">
+          <small>Password maksimal 16 karakter</small>
+        </ion-note>
+      </div>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label>Select City</ion-label>
-        <ion-select formControlName="city_of_residence">
-          <ion-select-option *ngFor="let city of selectedCities" [value]="city.id">
-            {{city.name | titlecase}}
-          </ion-select-option>
-        </ion-select>
-        <ion-note *ngIf="signupForm.get('city_of_residence').hasError('required') && signupForm.get('city_of_residence').touched" slot="error">City of residence required</ion-note>
-      </ion-item>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label position="floating">Ketik Ulang Password</ion-label>
+          <ion-input formControlName="confirmation_password" [type]="typeConfirmationPassword"></ion-input>
+          <ion-icon (click)="onEye('eyeConfirmationPassword', 'typeConfirmationPassword')" [name]="eyeConfirmationPassword"></ion-icon>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signupForm.get('confirmation_password').hasError('required') && signupForm.get('confirmation_password').touched">
+          <small>Konfirmasi password wajib diisi</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('confirmation_password').hasError('minlength') && signupForm.get('confirmation_password').touched">
+          <small>Konfirmasi password minimal 6 karakter</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('confirmation_password').hasError('maxlength') && signupForm.get('confirmation_password').touched">
+          <small>Konfirmasi password maksimal 16 karakter</small>
+        </ion-note>
+        <ion-note color="danger" *ngIf="signupForm.get('confirmation_password').hasError('mismatch') && !signupForm.get('confirmation_password').hasError('minlength') && !signupForm.get('confirmation_password').hasError('maxlength') && signupForm.get('confirmation_password').touched">
+          <small>{{signupForm.get('confirmation_password').errors['mismatch']}}</small>
+        </ion-note>
+      </div>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Address</ion-label>
-        <ion-textarea formControlName="address"></ion-textarea>
-        <ion-note *ngIf="signupForm.get('address').hasError('required') && signupForm.get('address').touched" slot="error">Address required</ion-note>
-        <ion-note *ngIf="signupForm.get('address').hasError('maxlength') && signupForm.get('address').touched" slot="error">Address max 300 characters</ion-note>
-      </ion-item>
+      <div class="item">
+        <ion-radio-group value="1" (ionFocus)="onRadioSelected($event)" lines="none" formControlName="gender">
+          <ion-list-header class="ion-no-padding">
+            <ion-label color="main">Gender</ion-label>
+          </ion-list-header>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Postal Address</ion-label>
-        <ion-input formControlName="postal_address" type="tel" maxlength="6"></ion-input>
-        <ion-note *ngIf="signupForm.get('postal_address').hasError('required') && signupForm.get('postal_address').touched" slot="error">Postal required</ion-note>
-        <ion-note *ngIf="signupForm.get('postal_address').hasError('maxlength') && signupForm.get('postal_address').touched" slot="error">Postal address max 6 numbers</ion-note>
-      </ion-item>
+          <ion-item lines="none" color="none" class="ion-no-padding">
+            <ion-label color="main">Pria</ion-label>
+            <ion-radio slot="start" value="1"></ion-radio>
+          </ion-item>
 
-      <ion-item class="ion-margin-bottom ion-no-padding">
-        <ion-label position="floating">Description / Remarks (Tell a little about yourself)</ion-label>
-        <ion-textarea formControlName="remark"></ion-textarea>
-      </ion-item>
+          <ion-item lines="none" color="none" class="ion-no-padding">
+            <ion-label color="main">Wanita</ion-label>
+            <ion-radio slot="start" value="2"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <ion-note color="danger" *ngIf="signupForm.get('gender').hasError('minlength') && signupForm.get('gender').touched">
+          <small>Gender wajib dipilih</small>
+        </ion-note>
+      </div>
 
-      <ng-container *ngIf="!loader">
-        <ion-button [disabled]="signupForm.invalid" type="submit" class="ion-margin-top" color="primary">Signup</ion-button>
-        <br>
-        <small class="reg">
-          Already have an account ?
-          <a routerLink="/signin">Signin here</a>
-        </small>
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label>Pilih Provinsi</ion-label>
+          <ion-select (ionChange)="onSelectProvince($event)" formControlName="place_of_birth">
+            <ion-select-option *ngFor="let province of provinces" [value]="province.id">
+              {{province.name | titlecase}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signupForm.get('place_of_birth').hasError('required') && signupForm.get('place_of_birth').touched">
+          <small>Tempat lahir wajib dipilih</small>
+        </ion-note>
+      </div>
+
+      <div class="item">
+        <ion-item lines="none" color="none" class="ion-no-padding input">
+          <ion-label>Pilih Kota</ion-label>
+          <ion-select formControlName="city_of_residence">
+            <ion-select-option *ngFor="let city of selectedCities" [value]="city.id">
+              {{city.name | titlecase}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-note color="danger" *ngIf="signupForm.get('city_of_residence').hasError('required') && signupForm.get('city_of_residence').touched">
+          <small>Kota wajib dipilih</small>
+        </ion-note>
+      </div>
+
+      <ng-container>
+        <ion-button *ngIf="!loader" [disabled]="signupForm.invalid" type="submit" class="ion-margin-top" color="main">
+          Signup
+        </ion-button>
+
+        <ion-spinner *ngIf="loader" class="ion-margin-top"></ion-spinner>
       </ng-container>
-
-      <ion-spinner *ngIf="loader"></ion-spinner>
     </ion-grid>
   </form>
 </ion-content>

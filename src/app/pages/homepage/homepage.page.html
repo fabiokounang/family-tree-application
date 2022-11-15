@@ -34,18 +34,22 @@
         </div>
       </div>
     </ion-card-header>
-    <!-- <ion-card-content>
-      {{user.remark}}
-    </ion-card-content> -->
   </ion-card>
 
-  <ion-card class="event" *ngIf="calendar">
+  <ion-card class="event" *ngIf="
+    calendar &&
+    calendar.calendar[nowMonth] &&
+    calendar.calendar[nowMonth][today] &&
+    calendar.calendar[nowMonth][today].events
+  ">
     <ion-card-header class="ion-no-margin">
-      <ion-card-subtitle>Today's Event ({{calendar.calendar[nowMonth][today].length > 0 ? calendar.calendar[nowMonth][today].length : 0}})</ion-card-subtitle>
+      <ion-card-subtitle>
+        Today's Event ({{calendar.calendar[nowMonth][today].events.length > 0 ? calendar.calendar[nowMonth][today].events.length : 0}})
+      </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
-      <ion-list *ngIf="calendar.calendar[nowMonth][today].length > 0" class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
-        <ion-item (click)="onDetailEvent(event)" *ngFor="let event of calendar.calendar[nowMonth][today].slice(0, 2)" class="ion-no-margin ion-no-padding">
+      <ion-list *ngIf="calendar.calendar[nowMonth][today].events.length > 0" class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
+        <ion-item (click)="onDetailEvent(event)" *ngFor="let event of calendar.calendar[nowMonth][today].events.slice(0, 2)" class="ion-no-margin ion-no-padding">
           <!-- <ion-avatar>
             <img [src]="event.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" alt="">
           </ion-avatar> -->
@@ -60,13 +64,13 @@
         </ion-item>
       </ion-list>
 
-      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].length <= 0">No Event</p>
-      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].length > 2" (click)="setOpen(true, calendar.calendar[nowMonth][today])">See more</p>
+      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].events.length <= 0">No Event</p>
+      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].events.length > 2" (click)="setOpen(true, calendar.calendar[nowMonth][today])">See more</p>
     </ion-card-content>
   </ion-card>
 
   <ion-card class="calendar-date">
-    <div *ngIf="calendar" class="calendar">
+    <div *ngIf="calendar && calendar.calendar[month]" class="calendar">
       <div class="month">
         {{months[month - 1]}} {{calendar.year}}
         <div class="">

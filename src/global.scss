@@ -9,33 +9,29 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+:root {
+  --color-secondary: #868686;
+  --color-error: #eb445a;
+  --font-primary: 'Arsenal';
+
+  --ion-color-main: #980000;
+}
+
+.ion-color-main {
+  --ion-color-base: var(--ion-color-main);
+}
+
 /* Core CSS required for Ionic components to work properly */
-
-@font-face {
-  font-family: 'raleway-reguler';
-  src: url('./assets/fonts/Raleway-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'raleway-semibold';
-  src: url('./assets/fonts/Raleway-SemiBold.ttf');
-}
-
-@font-face {
-  font-family: 'raleway-bold';
-  src: url('./assets/fonts/Raleway-Bold.ttf');
-}
 
 ion-title {
   font-weight: bold;
-  font-family: 'raleway-reguler';
+  font-family: 'Arsenal';
 }
 
 body.scanner-active {
   --background: transparent;
   --ion-background-color: transparent;
 }
-
 
 @import "~@ionic/angular/css/core.css";
 
@@ -51,3 +47,7 @@ body.scanner-active {
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-content {
+  --background: url('./assets/images/bg.png') 0 0/100% 100% no-repeat !important;
+}

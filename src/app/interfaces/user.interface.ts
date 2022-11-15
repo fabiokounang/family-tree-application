@@ -4,6 +4,7 @@ export interface UserInterface {
   status: string;
   created_at: string;
   no_anggota: string;
+  fullname: string;
   first_name_latin: string;
   last_name_latin: string;
   chinese_name: string;
