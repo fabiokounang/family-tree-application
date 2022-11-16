@@ -19,9 +19,9 @@ export class SharedService {
     localStorage.setItem('fullname', user.fullname);
     localStorage.setItem('email', user.email);
     localStorage.setItem('status', user.status);
+    localStorage.setItem('no_anggota', user.no_anggota);
     // localStorage.setItem('last_name_latin', user.last_name_latin);
     // localStorage.setItem('chinese_name', user.chinese_name);
-    // localStorage.setItem('no_anggota', user.no_anggota);
     // localStorage.setItem('point', String(user.point));
     // localStorage.setItem('remark', user.remark);
     // localStorage.setItem('image', user.image);
@@ -36,7 +36,7 @@ export class SharedService {
       // first_name_latin: localStorage.getItem('first_name_latin'),
       // last_name_latin: localStorage.getItem('last_name_latin'),
       // chinese_name: localStorage.getItem('chinese_name'),
-      // no_anggota: localStorage.getItem('no_anggota'),
+      no_anggota: localStorage.getItem('no_anggota'),
       status: localStorage.getItem('status'),
       // point: localStorage.getItem('point'),
       // remark: localStorage.getItem('remark'),
@@ -47,15 +47,10 @@ export class SharedService {
   removeLocalStorage () {
     localStorage.removeItem('_id');
     localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('first_name_latin');
-    localStorage.removeItem('last_name_latin');
-    localStorage.removeItem('chinese_name');
+    localStorage.removeItem('fullname');
+    localStorage.removeItem('email');
     localStorage.removeItem('no_anggota');
     localStorage.removeItem('status');
-    localStorage.removeItem('point');
-    localStorage.removeItem('remark');
-    localStorage.removeItem('image');
   }
 
   async callToast (message: string, position: 'top' | 'middle' | 'bottom', duration: number = 3000, header = '') {

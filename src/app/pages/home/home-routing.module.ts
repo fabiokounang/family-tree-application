@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/tree/tree.module').then( m => m.TreePageModule)
       },
       {
+        path: 'merchant',
+        loadChildren: () => import('../../pages/merchant/merchant.module').then( m => m.MerchantPageModule)
+      },
+      {
         path: 'profile',
         loadChildren: () => import('../../pages/profile/profile.module').then( m => m.ProfilePageModule),
       }

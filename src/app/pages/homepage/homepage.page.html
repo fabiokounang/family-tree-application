@@ -1,11 +1,3 @@
-<ion-header>
-  <ion-toolbar *ngIf="user">
-    <ion-title>{{user.username}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-icon name="notifications-outline"></ion-icon>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
   <ion-refresher (ionRefresh)="refreshPage($event)" slot="fixed" pullFactor="0.5" pullMin="100" pullMax="100">
@@ -15,121 +7,91 @@
     ></ion-refresher-content>
   </ion-refresher>
 
-  <ion-card *ngIf="user" class="bio">
-    <ion-card-header>
-      <!-- <img [src]="url + user.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" /> -->
-      <div class="bio-scan">
-        <ion-icon (click)="onOpenCamera()" name="scan-sharp"></ion-icon>
-        <ion-note>Scan Here</ion-note>
-      </div>
-      &nbsp;
-      &nbsp;
-      <div class="bio-biodata">
-        <ion-card-subtitle>{{user.no_anggota}}</ion-card-subtitle>
-        <ion-text>{{user.first_name_latin | titlecase}} {{user.last_name_latin | titlecase}} ({{user.chinese_name}})</ion-text>
-
-        <div>
-          <p>Point : {{user.point | number}}</p>
-          <ion-icon (click)="onInformation()" name="information-circle-outline"></ion-icon>
-        </div>
-      </div>
-    </ion-card-header>
+  <ion-card class="header">
+    <ion-header class="ion-no-border">
+      <ion-toolbar color="none">
+        <ion-buttons slot="start">
+          <div class="left">
+            <div class="img-container">
+              <img src="../../../assets/images/calendar.svg" alt="">
+            </div>
+            <div class="date-container">
+              <ion-text>
+                <p class="chinese-text">10月 18日,星期五</p>
+              </ion-text>
+              <ion-text color="black">
+                <p class="now">Jumat, 28 Nov 2022</p>
+              </ion-text>
+            </div>
+          </div>
+          <div class="right">
+            <img src="../../../assets/images/chinese-lamp.svg" alt="">
+          </div>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
   </ion-card>
 
-  <ion-card class="event" *ngIf="
-    calendar &&
-    calendar.calendar[nowMonth] &&
-    calendar.calendar[nowMonth][today] &&
-    calendar.calendar[nowMonth][today].events
-  ">
-    <ion-card-header class="ion-no-margin">
-      <ion-card-subtitle>
-        Today's Event ({{calendar.calendar[nowMonth][today].events.length > 0 ? calendar.calendar[nowMonth][today].events.length : 0}})
-      </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content class="ion-no-padding">
-      <ion-list *ngIf="calendar.calendar[nowMonth][today].events.length > 0" class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
-        <ion-item (click)="onDetailEvent(event)" *ngFor="let event of calendar.calendar[nowMonth][today].events.slice(0, 2)" class="ion-no-margin ion-no-padding">
-          <!-- <ion-avatar>
-            <img [src]="event.image || 'https://w7.pngwing.com/pngs/358/473/png-transparent-computer-icons-user-profile-person-child-heroes-public-relations.png'" alt="">
-          </ion-avatar> -->
-          <!-- &nbsp; -->
-          <ion-label>
-            <h3>{{event.name}}</h3>
-            <ion-note>
-              <span>{{event.description.slice(0, 40)}}</span>
-              <span *ngIf="event.description.length > 40">...</span>
-            </ion-note>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+  <ion-card class="biodata">
+    <ion-text color="main">
+      <h1>黄朝毅</h1>
+    </ion-text>
 
-      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].events.length <= 0">No Event</p>
-      <p class="ion-text-center ion-padding-bottom" *ngIf="calendar.calendar[nowMonth][today].events.length > 2" (click)="setOpen(true, calendar.calendar[nowMonth][today])">See more</p>
-    </ion-card-content>
+    <ion-text color="main">
+      <h3>{{fullname | titlecase}}</h3>
+    </ion-text>
+
+    <ion-text color="black">
+      <p>{{no_anggota}}</p>
+    </ion-text>
   </ion-card>
 
-  <ion-card class="calendar-date">
-    <div *ngIf="calendar && calendar.calendar[month]" class="calendar">
-      <div class="month">
-        {{months[month - 1]}} {{calendar.year}}
-        <div class="">
-          <ion-icon (click)="changeMonth(-1)" name="chevron-back-circle-outline"></ion-icon>
-          <ion-icon (click)="changeMonth(1)" name="chevron-forward-circle-outline"></ion-icon>
-        </div>
-      </div>
-      <span *ngFor="let d of emptyDay" class="day">
-        {{' '}}
-      </span>
-      <span
-        class="day"
-        (click)="setOpen(true, calendar.calendar[month][day].events)"
-        [ngStyle]="{ color: calendar.calendar[month][day].color, 'font-weight': calendar.calendar[month][day].color ? 'bold' : '' }"
-        *ngFor="let day of objectKeys(calendar.calendar[month])"
-      >
-        {{day}}
-      </span>
+  <ion-card class="menu">
+    <div class="point">
+      <ion-text color="main">
+        <p>1500</p>
+      </ion-text>
+      <ion-text color="main">
+        <span>point</span>
+      </ion-text>
+    </div>
 
-      <div class="boxes">
-        <span>
-          <span class="box box1"></span>
-          <span>Weekend</span>
-        </span>
-        <span>
-          <span class="box box2"></span>
-          <span>Event</span>
-        </span>
-        <span>
-          <span class="box box3"></span>
-          <span>Weekend & Event</span>
-        </span>
-      </div>
+    <div class="scan">
+      <img (click)="onOpenCamera()" src="../../../assets/images/scan.svg" alt="">
+    </div>
 
-      <ion-modal [isOpen]="isModalOpen">
-        <ng-template>
-          <ion-header>
-            <ion-toolbar>
-              <ion-title>Event Detail</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="setOpen(false)">Close</ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <ion-list class="ion-no-padding ion-no-margin" lines="full" [inset]="true">
-              <ion-item *ngFor="let event of detailDataCalendar" class="ion-no-margin ion-no-padding">
-                <ion-label class="ion-text-wrap">
-                  <h3>{{event.name}}</h3>
-                  <p>
-                    <span>{{event.description}}</span>
-                  </p>
-                </ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
+    <div class="tree">
+      <img routerLink="/home/tree" src="../../../assets/images/tree.svg" alt="">
+    </div>
 
+    <div class="merchant">
+      <img routerLink="/home/merchant" src="../../../assets/images/merchant.svg" alt="">
+    </div>
+  </ion-card>
+
+  <div class="banner ion-padding">
+    <ion-slides #slide (ionSlideTouchEnd)="onSlide($event)" pager="false" [options]="slideOpts">
+      <ion-slide *ngFor="let slide of slides; let i = index">
+        <img src="../../../assets/images/{{slide.banner}}" alt="">
+      </ion-slide>
+    </ion-slides>
+    <div class="bullets">
+      <div *ngFor="let slide of slides; let i = index" [ngClass]="{
+        bullet: i === bullet,
+        'no-bullet': i !== bullet
+      }"></div>
+    </div>
+  </div>
+
+  <ion-card class="newsletter">
+    <div *ngFor="let news of newsletter; let i = index" class="section">
+      <ion-text class="title-container" color="main">
+        <img src="../../../assets/images/shape.svg" alt="">
+        <p class="title">{{news.title.slice(0, 50)}}</p>
+      </ion-text>
+      <ion-text color="main">
+        <p class="description">{{news.description.slice(0, 40)}}...</p>
+      </ion-text>
     </div>
   </ion-card>
 </ion-content>

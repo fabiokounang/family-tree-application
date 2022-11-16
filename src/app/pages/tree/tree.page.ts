@@ -24,9 +24,9 @@ export class TreePage implements OnInit {
   }
 
   ionViewWillEnter () {
-    this.tree = document.getElementById('tree');
-    this.fillData();
-    this.getAllUser();
+    // this.tree = document.getElementById('tree');
+    // this.fillData();
+    // this.getAllUser();
   }
 
   fillData () {
