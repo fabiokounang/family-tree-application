@@ -8,11 +8,15 @@ export default {
   'master-change-password': 'api/user/changepassword',
   'master-calendar-active': 'api/calendar/user/active',
   'master-user-upload': 'api/user/uploadimage',
+  'master-user-update': 'api/user/update',
   'master-self-user': 'api/user/self',
   'master-register-event': 'api/occasion/present',
   'master-point-history': 'api/point/user/history',
   'master-user-tokenfcm': 'api/user/fcm',
   'master-user': 'api/user/user',
+  'master-banner': 'api/banner/banner_user',
+  'master-bulletin': 'api/bulletin/bulletin_user',
+  'master-one-bulletin': 'api/bulletin',
   'master-tree': 'api/tree',
   'master-tree-create': 'api/tree/create'
 }

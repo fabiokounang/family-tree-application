@@ -1,67 +1,122 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-back-button defaultHref="/home/profile" color="primary"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Profile Information</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding-horizontal">
+  <ion-header class="ion-no-border ion-padding-top ion-no-border">
+    <ion-toolbar color="none">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/profile" color="main"></ion-back-button>
+      </ion-buttons>
+      <ion-title color="main">Detail Profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Username</ion-label>
-      <ion-note>{{user?.username}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Email</ion-label>
-      <ion-note>{{user?.email | titlecase}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>First Name</ion-label>
-      <ion-note>{{user?.first_name_latin | titlecase}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Last Name</ion-label>
-      <ion-note>{{user?.last_name_latin | titlecase}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Chinese Name</ion-label>
-      <ion-note>{{user?.chinese_name}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Username</ion-label>
-      <ion-note>{{user?.username}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Address</ion-label>
-      <ion-note>{{user?.address}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Place Of Birth</ion-label>
-      <ion-note>{{user?.place_of_birth}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>City</ion-label>
-      <ion-note>{{user?.city_of_residence}}</ion-note>
-    </ion-item>
+  <div class="edit-profile">
+    <img (click)="onUpdateStateEdit()" src="../../../assets/icon/edit-profile.svg" alt="">
+  </div>
 
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Birthdate</ion-label>
-      <ion-note>{{user?.date_of_birth}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Member No</ion-label>
-      <ion-note>{{user?.no_anggota}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Phone</ion-label>
-      <ion-note>{{user?.phone}}</ion-note>
-    </ion-item>
-    <ion-item class="ion-no-padding ion-margin">
-      <ion-label>Wechat</ion-label>
-      <ion-note>{{user?.wechat || '-'}}</ion-note>
-    </ion-item>
+  <ion-list *ngIf="user">
+    <ng-container *ngIf="!isEditMode">
+      <div>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">Name</ion-label>
+          <ion-note color="main">{{user.fullname}}</ion-note>
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">Email</ion-label>
+          <ion-note color="main">{{user.email}}</ion-note>
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">Nama Chinese</ion-label>
+          <ion-note color="main">
+            {{user.chinese_name && user.chinese_name.length > 10 ? user.chinese_name.slice(0, 10) + '...' : user.chinese_name }}
+          </ion-note>
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">Provinsi</ion-label>
+          <ion-note color="main">{{user.place_of_birth.province | titlecase}}</ion-note>
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">Koota</ion-label>
+          <ion-note color="main">{{user.city_of_residence.city | titlecase}}</ion-note>
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">Member No</ion-label>
+          <ion-note color="main">{{user.place_of_birth.code + ' ' + user.nomor_anggota}}</ion-note>
+        </ion-item>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isEditMode">
+      <form (ngSubmit)="onEditProfile()" [formGroup]="formProfile">
+        <ion-grid>
+          <div class="item">
+            <ion-item lines="none" color="none" class="ion-no-padding input">
+              <ion-label position="floating">Nama Lengkap</ion-label>
+              <ion-input formControlName="fullname" type="text"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="formProfile.get('fullname').hasError('required') && formProfile.get('fullname').touched">
+              <small>Nama lengkap wajib diisi</small>
+            </ion-note>
+          </div>
+
+          <div class="item">
+            <ion-item lines="none" color="none" class="ion-no-padding input">
+              <ion-label position="floating">Alamat Email</ion-label>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="formProfile.get('email').hasError('required') && formProfile.get('email').touched">
+              <small>Email wajib diisi</small>
+            </ion-note>
+            <ion-note color="danger" *ngIf="formProfile.get('email').hasError('email') && formProfile.get('email').touched">
+              <small>Email tidak valid</small>
+            </ion-note>
+          </div>
+
+          <div class="item">
+            <ion-item lines="none" color="none" class="ion-no-padding input">
+              <ion-label position="floating">Nama Chinese</ion-label>
+              <ion-input formControlName="chinese_name" type="text"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="formProfile.get('chinese_name').hasError('required') && formProfile.get('chinese_name').touched">
+              <small>Nama chinese maksimal 200 karakter</small>
+            </ion-note>
+          </div>
+
+          <div class="item">
+            <ion-item lines="none" color="none" class="ion-no-padding input">
+              <ion-label>Pilih Provinsi</ion-label>
+              <ion-select (ionChange)="onSelectProvince($event)" formControlName="place_of_birth">
+                <ion-select-option *ngFor="let province of provinces" [value]="province.id">
+                  {{province.name | titlecase}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-note color="danger" *ngIf="formProfile.get('place_of_birth').hasError('required') && formProfile.get('place_of_birth').touched">
+              <small>Tempat lahir wajib dipilih</small>
+            </ion-note>
+          </div>
+
+          <div class="item">
+            <ion-item lines="none" color="none" class="ion-no-padding input">
+              <ion-label>Pilih Kota</ion-label>
+              <ion-select formControlName="city_of_residence">
+                <ion-select-option *ngFor="let city of selectedCities" [value]="city.id">
+                  {{city.name | titlecase}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-note color="danger" *ngIf="formProfile.get('city_of_residence').hasError('required') && formProfile.get('city_of_residence').touched">
+              <small>Kota wajib dipilih</small>
+            </ion-note>
+          </div>
+
+          <div>
+            <ion-button *ngIf="!loader" [disabled]="formProfile.invalid" type="submit" class="ion-margin-top" color="main">
+              Edit Profile
+            </ion-button>
+
+            <ion-spinner *ngIf="loader" class="ion-margin-top"></ion-spinner>
+          </div>
+        </ion-grid>
+      </form>
+    </ng-container>
   </ion-list>
 </ion-content>

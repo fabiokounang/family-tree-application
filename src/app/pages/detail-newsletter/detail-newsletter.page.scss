@@ -1,0 +1,59 @@
+ion-content {
+  ion-header {
+    ion-title {
+      font-size: 28px;
+      padding: 0;
+    }
+  }
+
+  div.content {
+    div.img-container {
+      margin-top: 2rem;
+    }
+
+    div.head {
+      color: var(--ion-color-main);
+      font-family: var(--font-primary);
+      p.title {
+        font-size: 24px;
+        margin-bottom: 0;
+        font-weight: bold;
+      }
+
+      p.subtitle {
+        margin-top: .5rem;
+        font-size: 20px;
+      }
+    }
+
+    div.description {
+      p {
+        font-family: var(--font-primary);
+        line-height: 1.5;
+      }
+    }
+  }
+
+  div.other-content {
+    margin-top: 2rem;
+
+    p {
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--ion-color-main);
+    }
+    ion-slide.img-other-content {
+      display: flex;
+      justify-content: space-around;
+      flex-direction: row;
+      margin-bottom: 1rem;
+      img {
+        width: 170px;
+        max-height: 115px;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}

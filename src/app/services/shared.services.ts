@@ -9,8 +9,10 @@ import { Subject } from 'rxjs';
 
 export class SharedService {
   onChangeMonth: Subject<any> = new Subject();
-  errGeneral: string = 'Something went wrong, please try again';
-
+  errGeneral: string = 'Kesalahan sistem, silahkan coba lagi';
+  sessionOver: string = 'Sesi anda telah habis, silahkan masuk kembali';
+  connectionError: string = 'Koneksi internet terputus, Silahkan cek kembali jaringan anda';
+  subConnectionError: string = 'Silahkan cek kembali jaringan anda';
   constructor (private toastController: ToastController, private alertController: AlertController) {}
 
   saveToLocalStorage (user: UserInterface) {
@@ -20,8 +22,8 @@ export class SharedService {
     localStorage.setItem('email', user.email);
     localStorage.setItem('status', user.status);
     localStorage.setItem('no_anggota', user.no_anggota);
+    localStorage.setItem('chinese_name', user.chinese_name);
     // localStorage.setItem('last_name_latin', user.last_name_latin);
-    // localStorage.setItem('chinese_name', user.chinese_name);
     // localStorage.setItem('point', String(user.point));
     // localStorage.setItem('remark', user.remark);
     // localStorage.setItem('image', user.image);
@@ -35,7 +37,7 @@ export class SharedService {
       email: localStorage.getItem('email'),
       // first_name_latin: localStorage.getItem('first_name_latin'),
       // last_name_latin: localStorage.getItem('last_name_latin'),
-      // chinese_name: localStorage.getItem('chinese_name'),
+      chinese_name: localStorage.getItem('chinese_name'),
       no_anggota: localStorage.getItem('no_anggota'),
       status: localStorage.getItem('status'),
       // point: localStorage.getItem('point'),
@@ -51,6 +53,11 @@ export class SharedService {
     localStorage.removeItem('email');
     localStorage.removeItem('no_anggota');
     localStorage.removeItem('status');
+    localStorage.removeItem('chinese_name');
+  }
+
+  setChineseNameLocalStorage (chineseName) {
+    localStorage.setItem('chinese_name', chineseName);
   }
 
   async callToast (message: string, position: 'top' | 'middle' | 'bottom', duration: number = 3000, header = '') {
@@ -64,9 +71,9 @@ export class SharedService {
     await toast.present();
   }
 
-  async callAlert (header: string, subheader: string = '', message: string = '', buttons: any[] = ['Dismiss'], custom: any = {}) {
+  async callAlert (header: string = '', subheader: string = '', message: string = '', buttons: any[] = ['Dismiss'], custom: any = {}) {
     const alert = await this.alertController.create({
-      header: header,
+      header: header ? header : this.connectionError,
       subHeader: subheader,
       message: message,
       buttons: buttons,

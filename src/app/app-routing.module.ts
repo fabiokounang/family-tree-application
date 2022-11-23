@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { GuardService } from './services/guard.service';
 
 const routes: Routes = [
   {
@@ -17,27 +18,38 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [GuardService]
   },
   {
     path: 'change-password',
-    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule),
+    canActivate: [GuardService]
   },
   {
     path: 'change-theme',
-    loadChildren: () => import('./pages/change-theme/change-theme.module').then( m => m.ChangeThemePageModule)
+    loadChildren: () => import('./pages/change-theme/change-theme.module').then( m => m.ChangeThemePageModule),
+    canActivate: [GuardService]
+  },
+  {
+    path: 'list-newsletter',
+    loadChildren: () => import('./pages/list-newsletter/list-newsletter.module').then( m => m.ListNewsletterPageModule),
+    canActivate: [GuardService],
+  },
+  {
+    path: 'detail-newsletter/:id',
+    canActivate: [GuardService],
+    loadChildren: () => import('./pages/detail-newsletter/detail-newsletter.module').then( m => m.DetailNewsletterPageModule)
   },
   {
     path: 'profile-information',
-    loadChildren: () => import('./pages/profile-information/profile-information.module').then( m => m.ProfileInformationPageModule)
+    loadChildren: () => import('./pages/profile-information/profile-information.module').then( m => m.ProfileInformationPageModule),
+    canActivate: [GuardService]
   },
   {
     path: 'event/:id',
-    loadChildren: () => import('./pages/register-event/register-event.module').then( m => m.RegisterEventPageModule)
-  },
-  {
-    path: 'merchant',
-    loadChildren: () => import('./pages/merchant/merchant.module').then( m => m.MerchantPageModule)
+    loadChildren: () => import('./pages/register-event/register-event.module').then( m => m.RegisterEventPageModule),
+    canActivate: [GuardService]
   }
 ]
 

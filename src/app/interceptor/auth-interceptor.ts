@@ -14,10 +14,11 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor (private sharedService: SharedService, private router: Router) {}
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const type = "application/json; charset=utf-8";
-    const headers = new HttpHeaders({
-      'Accept': 'text/html, application/json, text/plain, multipart/form-data, */*',
-      'Authorization': 'Bearer ' + this.sharedService.getLocalStorage().token
-    });
+    const headerOpt = {
+      'Accept': 'text/html, application/json, text/plain, multipart/form-data, */*'
+    }
+    if (this.sharedService.getLocalStorage().token) headerOpt['Authorization'] = 'Bearer ' + this.sharedService.getLocalStorage().token;
+    const headers = new HttpHeaders(headerOpt);
 
     const updatedRequest = req.clone({
       withCredentials: true,
@@ -26,6 +27,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(updatedRequest).pipe(
       catchError(( { error }: HttpErrorResponse) => {
+        if (error && error.error && error.error === 'Not Authenticated') {
+          console.log(error, 'error')
+          this.sharedService.removeLocalStorage();
+          this.router.navigate(['/']);
+          error.error = this.sharedService.sessionOver
+          return throwError(error);
+        }
         return throwError(error);
      })
     );

@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Redeem Point</ion-title>
   </ion-toolbar>
@@ -15,4 +15,16 @@
       <ion-button *ngIf="!loader" routerLink="/home/homepage">Back To Home</ion-button>
     </div>
   </div>
+</ion-content> -->
+
+<ion-content>
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="none">
+      <ion-title>{{content ? content : 'Coming Soon'}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-button *ngIf="!loader" routerLink="/home/homepage">Back To Home</ion-button>
 </ion-content>
+
+

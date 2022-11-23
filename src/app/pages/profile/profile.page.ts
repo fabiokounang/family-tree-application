@@ -15,6 +15,8 @@ export class ProfilePage implements OnInit {
   user: any;
   url: string = '';
   loader: boolean = false;
+  fullname: string = '';
+  chinese_name: string = '';
 
   constructor (private router: Router, private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
 
@@ -24,6 +26,8 @@ export class ProfilePage implements OnInit {
 
   ionViewWillEnter () {
     this.getUser();
+    this.fullname = this.sharedService.getLocalStorage().fullname;
+    this.chinese_name = this.sharedService.getLocalStorage().chinese_name;
   }
 
   getUser () {

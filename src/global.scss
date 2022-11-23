@@ -17,6 +17,9 @@
   --ion-color-main: #980000;
   --ion-color-black: #000000;
   --ion-color-grey: #AAAAAA;
+  --ion-color-disabled: #CCCCCC;
+  --ion-color-light: #FFFAEC;
+  --ion-color-card: #D95127;
 }
 
 .ion-color-main {
@@ -29,6 +32,14 @@
 
 .ion-color-grey {
   --ion-color-base: var(--ion-color-grey);
+}
+
+.ion-color-light {
+  --ion-color-base: var(--ion-color-light);
+}
+
+.ion-color-card {
+  --ion-color-base: var(--ion-color-card);
 }
 
 /* Core CSS required for Ionic components to work properly */

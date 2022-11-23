@@ -41,8 +41,8 @@ export class SignupPage implements OnInit {
       fullname: new FormControl(null, [Validators.required]),
       nik: new FormControl(null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
-      confirmation_password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), this.checkPassword.bind(this)]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), this.checkPassword.bind(this)]),
+      confirmation_password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), this.checkConfirmationPassword.bind(this)]),
       gender: new FormControl(null, [Validators.required]),
       // first_name_latin: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
       // last_name_latin: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
@@ -61,11 +61,21 @@ export class SignupPage implements OnInit {
 
   checkPassword (control: FormControl) {
     if (this.signupForm) {
+      if (control.value == this.signupForm.value.confirmation_password) {
+        this.signupForm.get('confirmation_password')?.setErrors(null);
+        this.signupForm.get('password')?.setErrors(null);
+      }
+    }
+  }
+
+  checkConfirmationPassword (control: FormControl) {
+    if (this.signupForm) {
       if (control.value != this.signupForm.value.password) {
         return {
-          mismatch: 'Confirmation password not match with password'
+          mismatch: 'Konfirmasi password tidak sesuai dengan password'
         }
       } else {
+        this.signupForm.get('password')?.setErrors(null);
         return null;
       }
     }
@@ -130,7 +140,7 @@ export class SignupPage implements OnInit {
       this.signupForm.disable();
       this.apiService.connection('master-signup', this.signupForm.value).subscribe({
         next: (response: HttpResponse) => {
-          this.sharedService.callToast('Success signup', 'bottom');
+          this.sharedService.callToast('Berhasil daftar', 'bottom');
           this.signupForm.enable();
           this.router.navigate(['/signin']);
         },

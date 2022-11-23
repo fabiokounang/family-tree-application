@@ -27,6 +27,7 @@ ion-content {
         ion-label {
           font-size: 15px;
           font-family: var(--font-primary);
+          color: var(--ion-color-grey);
         }
 
         ion-note {
@@ -41,10 +42,16 @@ ion-content {
         }
       }
 
-      ion-button {
-        font-family: var(--font-primary);
-        box-sizing: border-box;
-      }
+    }
+    ion-button {
+      margin-top: 2rem;
+      box-sizing: border-box;
+      --border-radius: 50px;
+      font-family: var(--font-primary);
+      font-weight: bold;
+      font-size: 20px;
+      height: 49px;
+      width: 225px;
     }
 
   }

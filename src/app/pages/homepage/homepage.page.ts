@@ -6,7 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.services';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Router } from '@angular/router';
-import { IonSlides, Platform } from '@ionic/angular';
+import { IonSlides, Platform, ViewWillEnter } from '@ionic/angular';
 
 import {
   ActionPerformed,
@@ -14,13 +14,15 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
+import { BannerInterface } from 'src/app/interfaces/banner.interface';
+import { BannerPaginationInterface } from 'src/app/interfaces/bannerpagination.interface';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.page.html',
   styleUrls: ['./homepage.page.scss'],
 })
-export class HomepagePage implements OnInit {
+export class HomepagePage implements OnInit, ViewWillEnter {
   @ViewChild('slide', { read: IonSlides }) slide: IonSlides;
   selectedDate: any = null;
   selectedCalendar: any = null;
@@ -35,7 +37,6 @@ export class HomepagePage implements OnInit {
   text: string = '#FFFFFF';
   emptyDay: any = [];
   months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  url: string = '';
   nowMonth = new Date().getMonth() + 1;
   today = new Date().getDate();
   isModalOpen: boolean = false;
@@ -47,11 +48,8 @@ export class HomepagePage implements OnInit {
   bullet: number = 0;
   fullname: string = '';
   no_anggota: string = '';
-
-  slides: any[] = [
-    { banner: 'banner1.png' },
-    { banner: 'banner2.jpg' }
-  ];
+  showMore: boolean = false;
+  slides: any = null;
 
   slideOpts = {
     slidesPerView: 1,
@@ -144,25 +142,43 @@ export class HomepagePage implements OnInit {
 
   newsletter: any[] = [
     {
-      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet',
-      description: 'Lorem ipsum dolor sit amet elit. Velit, odit!'
+      id: 1,
+      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 1',
+      image: '',
+      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
+      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
     },
     {
-      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet',
-      description: 'Lorem ipsum dolor sit amet elit. Velit, odit!'
+      id: 2,
+      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 2',
+      image: '',
+      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
+      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
+    },
+    {
+      id: 3,
+      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 3',
+      image: '',
+      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
+      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
+    },
+    {
+      id: 4,
+      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 4',
+      image: '',
+      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
+      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
     }
   ]
 
   constructor (private apiService: ApiService, private sharedService: SharedService, private meta: Meta, private router: Router, private platform: Platform) { }
 
   ngOnInit(): void {
-    this.fillData();
     if (!this.platform.platforms().includes('desktop') && !this.platform.is('mobileweb')) this.requestNotification();
     this.listenSubscription();
   }
 
   fillData () {
-    this.url = this.meta.getTag('name=api').content + 'images/';
     this.fullname = this.sharedService.getLocalStorage().fullname;
     this.no_anggota = this.sharedService.getLocalStorage().no_anggota;
   }
@@ -174,14 +190,19 @@ export class HomepagePage implements OnInit {
   }
 
   ionViewWillEnter () {
+    this.fillData();
     this.getUser();
     this.getCalendar();
+    this.getBanner();
+    this.getBulletin();
   }
 
   async refreshPage (event) {
     setTimeout(() => {
       this.getUser();
       this.getCalendar();
+      this.getBanner();
+      this.getBulletin();
       event.target.complete();
     }, 2000);
   }
@@ -199,7 +220,32 @@ export class HomepagePage implements OnInit {
         this.user = response;
       },
       error: ({ error }: HttpErrorResponse) => {
-        console.log(error);
+        this.sharedService.callAlert(!error.error ? error : error.error);
+      },
+      complete: () => {}
+    });
+  }
+
+  getBanner () {
+    this.apiService.connection('master-banner').subscribe({
+      next: (response: any) => {
+        this.slides = response.values;
+      },
+      error: ({ error }: HttpErrorResponse) => {
+        this.sharedService.callAlert(!error.error ? error : error.error);
+      },
+      complete: () => {}
+    });
+  }
+
+  getBulletin () {
+    this.apiService.connection('master-bulletin', { page: 0, limit: 3 }).subscribe({
+      next: (response: any) => {
+        this.newsletter = response.values;
+        if (response.total > 3) this.showMore = true;
+      },
+      error: ({ error }: HttpErrorResponse) => {
+        this.sharedService.callAlert(!error.error ? error : error.error);
       },
       complete: () => {}
     });
@@ -213,7 +259,6 @@ export class HomepagePage implements OnInit {
     this.apiService.connection('master-calendar-active').subscribe({
       next: (response: any) => {
         this.calendar = response.value;
-        console.log(this.calendar.calendar[this.nowMonth][this.today]);
         this.processEmptyDay();
       },
       error: ({ error }: HttpErrorResponse) => {

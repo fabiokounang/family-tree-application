@@ -24,8 +24,8 @@ export class SigninPage implements OnInit {
 
   makeForm () {
     this.signinForm = new FormGroup({
-      email: new FormControl('fabiokounang11@gmail.com', [Validators.required, Validators.email]),
-      password: new FormControl('qweqwe123', [Validators.required, Validators.minLength(6), Validators.maxLength(16)])
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)])
     });
   }
 
@@ -49,7 +49,7 @@ export class SigninPage implements OnInit {
         }
       });
     } else {
-      this.sharedService.callAlert('Bad request', 'Input not valid');
+      this.sharedService.callAlert('Request tidak valid');
     }
   }
 

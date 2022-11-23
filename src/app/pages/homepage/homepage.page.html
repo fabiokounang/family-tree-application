@@ -13,7 +13,7 @@
         <ion-buttons slot="start">
           <div class="left">
             <div class="img-container">
-              <img src="../../../assets/images/calendar.svg" alt="">
+              <img routerLink="/home/calendar" src="../../../assets/images/calendar.svg" alt="">
             </div>
             <div class="date-container">
               <ion-text>
@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="right">
-            <img src="../../../assets/images/chinese-lamp.svg" alt="">
+            <img routerLink="/home/notification" src="../../../assets/images/chinese-lamp.svg" alt="">
           </div>
         </ion-buttons>
       </ion-toolbar>
@@ -34,7 +34,7 @@
 
   <ion-card class="biodata">
     <ion-text color="main">
-      <h1>黄朝毅</h1>
+      <h1 *ngIf="user">{{user.chinese_name.length > 7 ? user.chinese_name.slice(0, 7) + '...' : user.chinese_name }}</h1>
     </ion-text>
 
     <ion-text color="main">
@@ -49,49 +49,61 @@
   <ion-card class="menu">
     <div class="point">
       <ion-text color="main">
-        <p>1500</p>
+        <p>{{1500000 | number: '1.0-0'}}</p>
       </ion-text>
       <ion-text color="main">
-        <span>point</span>
+        <span>pts</span>
       </ion-text>
     </div>
 
-    <div class="scan">
-      <img (click)="onOpenCamera()" src="../../../assets/images/scan.svg" alt="">
-    </div>
+    <div class="icons">
+      <div class="scan">
+        <img (click)="onOpenCamera()" src="../../../assets/images/scan.svg" alt="">
+      </div>
 
-    <div class="tree">
-      <img routerLink="/home/tree" src="../../../assets/images/tree.svg" alt="">
-    </div>
+      <div class="tree">
+        <img src="../../../assets/images/tree.svg" alt="">
+      </div>
 
-    <div class="merchant">
-      <img routerLink="/home/merchant" src="../../../assets/images/merchant.svg" alt="">
+      <div class="merchant">
+        <img src="../../../assets/images/merchant.svg" alt="">
+      </div>
     </div>
   </ion-card>
 
-  <div class="banner ion-padding">
-    <ion-slides #slide (ionSlideTouchEnd)="onSlide($event)" pager="false" [options]="slideOpts">
-      <ion-slide *ngFor="let slide of slides; let i = index">
-        <img src="../../../assets/images/{{slide.banner}}" alt="">
-      </ion-slide>
-    </ion-slides>
-    <div class="bullets">
-      <div *ngFor="let slide of slides; let i = index" [ngClass]="{
-        bullet: i === bullet,
-        'no-bullet': i !== bullet
-      }"></div>
+  <div *ngIf="slides">
+    <div class="banner ion-padding-top ion-padding-horizontal">
+      <ion-slides #slide (ionSlideTouchEnd)="onSlide($event)" pager="false" [options]="slideOpts">
+        <ion-slide *ngFor="let slide of slides; let i = index">
+          <img src="{{slide.image}}" alt="">
+        </ion-slide>
+      </ion-slides>
+      <div class="bullets">
+        <div *ngFor="let slide of slides; let i = index" [ngClass]="{
+          bullet: i === bullet,
+          'no-bullet': i !== bullet
+        }"></div>
+      </div>
     </div>
   </div>
 
-  <ion-card class="newsletter">
-    <div *ngFor="let news of newsletter; let i = index" class="section">
-      <ion-text class="title-container" color="main">
-        <img src="../../../assets/images/shape.svg" alt="">
-        <p class="title">{{news.title.slice(0, 50)}}</p>
-      </ion-text>
-      <ion-text color="main">
-        <p class="description">{{news.description.slice(0, 40)}}...</p>
-      </ion-text>
+  <div class="newsletter-wrapper">
+    <ion-card class="newsletter ion-no-margin">
+      <div routerLink="/detail-newsletter/{{news._id}}" *ngFor="let news of newsletter; let i = index" class="section">
+        <ion-text class="title-container" color="main">
+          <img src="../../../assets/images/shape.svg" alt="">
+          <p class="title">{{news.title.slice(0, 50)}}</p>
+        </ion-text>
+        <ion-text color="main">
+          <p class="description">{{news.subtitle.slice(0, 40)}}...</p>
+        </ion-text>
+        <div class="ruler" *ngIf="i !== newsletter.length -1"></div>
+      </div>
+    </ion-card>
+    <div *ngIf="showMore" class="show-more">
+      <ion-button routerLink="/list-newsletter" class="more" color="none">
+        Tampilkan Semua
+      </ion-button>
     </div>
-  </ion-card>
+  </div>
 </ion-content>

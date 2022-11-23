@@ -1,0 +1,18 @@
+<ion-content class="ion-padding-horizontal">
+  <ion-header class="ion-no-border ion-padding-top ion-no-border">
+    <ion-toolbar color="none">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/homepage" color="main"></ion-back-button>
+      </ion-buttons>
+      <ion-title color="main">List Bulletin</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item lines="none" color="none" detail="false" routerLink="/detail-newsletter/{{news.id}}" *ngFor="let news of newsletter; let i = index" class="ion-no-padding ion-no-margin">
+    <ion-label color="main">
+      <h1>{{news.title}}</h1>
+      <p>{{ news.subtitle }}</p>
+      <img src="../../../assets/icon/arrow-right.svg" alt="">
+    </ion-label>
+  </ion-item>
+</ion-content>

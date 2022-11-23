@@ -46,7 +46,7 @@ ion-content {
     }
 
     h1 {
-      font-size: 40px;
+      font-size: 35px;
     }
 
     h2 {
@@ -64,6 +64,7 @@ ion-content {
   ion-card.menu {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-inline: 0;
     margin: 0;
     box-shadow: none;
@@ -71,11 +72,11 @@ ion-content {
     div.point {
       display: flex;
       align-items: baseline;
-      padding-left: .5rem;
+      padding-left: 1rem;
 
       ion-text {
         p {
-          font-size: 48px;
+          font-size: 30px;
           margin: 0;
         }
       }
@@ -83,22 +84,37 @@ ion-content {
       ion-text {
         span {
           padding-left: .5rem;
-          font-size: 15px;
+          font-size: 13px;
           font-weight: bold;
         }
       }
     }
 
-    div.scan {
-      padding-left: 1.9rem;
-    }
+    div.icons {
+      display: flex;
+      padding-right: 1rem;
+      div.scan {
+        padding-left: 1.7rem;
+        img {
+          width: 49px;
+        }
+      }
 
-    div.tree {
-      padding-left: 1.9rem;
-    }
+      div.tree {
+        padding-left: 1.7rem;
+        img {
+          opacity: 0.5;
+          width: 49px;
+        }
+      }
 
-    div.merchant {
-      padding-left: 1.9rem;
+      div.merchant {
+        padding-left: 1.7rem;
+        img {
+          opacity: 0.5;
+          width: 49px;
+        }
+      }
     }
   }
 
@@ -126,36 +142,65 @@ ion-content {
     }
   }
 
-  ion-card.newsletter {
-    padding: 1rem;
-    font-family: var(--font-primary);
-    div.section {
-      padding-bottom: 1rem;
+  div.newsletter-wrapper {
+    position: relative;
+    ion-card.newsletter {
+      border: 1px solid var(--ion-color-main);
+      padding: 1rem;
+      font-family: var(--font-primary);
+      div.section {
+        padding-bottom: 1rem;
 
-      ion-text.title-container {
-        display: flex;
-        align-items: baseline;
-      }
+        ion-text.title-container {
+          display: flex;
+          align-items: baseline;
+        }
 
-      span.shape {
-        display: inline-block;
-        width: 10px;
-        height: 7px;
-        border-radius: 50%;
-        background-color: var(--ion-color-main);
-      }
-      p {
-        margin: 0.1rem 0;
-      }
-      p.title {
-        font-weight: bold;
-        font-size: 20px;
-        padding-left: .5rem;
-      }
+        span.shape {
+          display: inline-block;
+          width: 10px;
+          height: 7px;
+          border-radius: 50%;
+          background-color: var(--ion-color-main);
+        }
+        p {
+          margin: 0.1rem 0;
+        }
+        p.title {
+          font-weight: bold;
+          font-size: 20px;
+          padding-left: .5rem;
+        }
 
-      p.description {
-        font-size: 16px;
-        padding-left: 1.1rem;
+        p.description {
+          font-size: 16px;
+          padding-left: 1.1rem;
+        }
+      }
+      div.ruler {
+        border-bottom: 1px dotted var(--ion-color-grey);
+        padding-top: 1rem;
+      }
+    }
+
+    div.show-more {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      ion-button.more {
+        text-align: center;
+        background: var(--ion-color-main);
+        color: var(--ion-color-light);
+        padding: 0.5rem 1rem;
+        margin: 0 auto;
+        bottom: 35px;
+        width: 160px;
+        position: relative;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: var(--font-primary);
       }
     }
   }

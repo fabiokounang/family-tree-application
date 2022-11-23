@@ -14,10 +14,11 @@ export class RegisterEventPage implements OnInit {
   isFailed: boolean = false;
   loader: boolean = false;
   errorMessage: string = '';
-
+  content: any = null;
   constructor (private apiService: ApiService, private sharedService: SharedService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.content = this.route.snapshot.params['id'];
     this.onRegisterEvent();
   }
 

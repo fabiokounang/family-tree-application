@@ -1,5 +1,5 @@
 
-<ion-content class="ion-padding-horizontal">
+<ion-content class="ion-padding">
   <ion-header class="ion-no-border">
     <ion-toolbar color="none">
       <ion-buttons slot="start">
@@ -10,7 +10,18 @@
   </ion-header>
 
   <div class="member-card">
-    <div class="left">
+    <div>
+      <img src="../../../assets/images/membercard.jpg" alt="">
+    </div>
+    <div class="desc">
+      <h1>{{chinese_name.slice(0, 10)}}</h1>
+      <p>{{fullname | titlecase}}</p>
+    </div>
+
+    <div class="qr">
+      <img src="https://chart.googleapis.com/chart?chs=250x250&chld=Q|0&cht=qr&chl={{fullname}}" alt="">
+    </div>
+    <!-- <div class="left">
       <div>
         <img src="" alt="">
         <p>Yayasan Marga Huang Batam</p>
@@ -21,16 +32,18 @@
         <p>Sofian Agung Wijaya</p>
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right"></div> -->
   </div>
 
   <div class="action">
-    <ion-item routerLink="/profile-information" color="main" class="ion-no-padding">
+    <ion-item routerLink="/profile-information" color="main" detail="false" class="ion-no-padding">
       <img src="../../../assets/images/person.svg">
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
       <p>Informasi Profil</p>
     </ion-item>
-    <ion-item routerLink="/change-password" color="main" class="ion-no-padding">
+    <ion-item routerLink="/change-password" color="main" detail="false" class="ion-no-padding">
       <img src="../../../assets/images/lock.svg">
+      <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
       <p>Ganti Password</p>
     </ion-item>
   </div>

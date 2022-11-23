@@ -1,0 +1,35 @@
+<ion-content class="ion-padding-horizontal">
+  <ion-header class="ion-no-border ion-padding-top ion-no-border">
+    <ion-toolbar color="none">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/homepage" color="main"></ion-back-button>
+      </ion-buttons>
+      <ion-title color="main">Detail Bulletin</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="content">
+    <div class="img-container">
+      <img [src]="detail?.image" alt="">
+    </div>
+
+    <div class="head">
+      <p class="title">{{detail?.title}}</p>
+      <p class="subtitle">{{detail?.subtitle}}</p>
+    </div>
+
+    <div class="description">
+      <p>{{detail?.description}}</p>
+    </div>
+  </div>
+
+  <div class="other-content">
+    <p>Buletin Lainnya</p>
+    <ion-slides #slide (ionSlideTouchEnd)="onSlide($event)" pager="false" [options]="slideOpts">
+      <ion-slide (click)="onOtherNewsLetter(new)" class="img-other-content" *ngFor="let new of newsletter; let i = index">
+        <img [src]="new.image" alt="">
+      </ion-slide>
+    </ion-slides>
+
+  </div>
+</ion-content>

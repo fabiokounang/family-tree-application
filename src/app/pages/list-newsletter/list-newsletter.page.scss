@@ -1,0 +1,35 @@
+ion-content {
+  ion-header {
+    margin-bottom: 2rem;
+    ion-title {
+      font-size: 28px;
+      padding: 0;
+    }
+  }
+
+  ion-item {
+    padding-bottom: .5rem;
+    font-family: var(--font-primary);
+    border-bottom: 1px dotted var(--ion-color-main);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    ion-label {
+      max-width: 85%;
+      h1, p {
+        font-family: var(--font-primary);
+      }
+      h1 {
+        font-weight: 700;
+      }
+    }
+
+    img {
+      position: absolute;
+      right: 15px;
+      bottom: 20px;
+      font-size: 50px;
+    }
+  }
+}
