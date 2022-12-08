@@ -22,8 +22,8 @@
       <p>{{detail?.description}}</p>
     </div>
   </div>
-
-  <div class="other-content">
+  <br>
+  <div *ngIf="newsletter.length > 0" class="other-content">
     <p>Buletin Lainnya</p>
     <ion-slides #slide (ionSlideTouchEnd)="onSlide($event)" pager="false" [options]="slideOpts">
       <ion-slide (click)="onOtherNewsLetter(new)" class="img-other-content" *ngFor="let new of newsletter; let i = index">

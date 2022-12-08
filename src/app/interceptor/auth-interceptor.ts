@@ -1,8 +1,7 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { ApiService } from '../services/api.service';
-import { catchError } from "rxjs/operators";
+import { catchError, retry } from "rxjs/operators";
 import { Router } from '@angular/router';
 import { SharedService } from '../services/shared.services';
 
@@ -26,6 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
     });
 
     return next.handle(updatedRequest).pipe(
+      retry(3),
       catchError(( { error }: HttpErrorResponse) => {
         if (error && error.error && error.error === 'Not Authenticated') {
           console.log(error, 'error')

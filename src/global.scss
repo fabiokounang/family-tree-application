@@ -20,6 +20,26 @@
   --ion-color-disabled: #CCCCCC;
   --ion-color-light: #FFFAEC;
   --ion-color-card: #D95127;
+  --ion-color-gregorian: #DDDDDD;
+  --ion-color-lunar: #FFC701;
+  --ion-color-green: #AAEA9A;
+  --ion-color-white: #FFFFFF;
+}
+
+.ion-color-white {
+  --ion-color-base: var(--ion-color-white);
+}
+
+.ion-color-lunar {
+  --ion-color-base: var(--ion-color-lunar);
+}
+
+.ion-color-green {
+  --ion-color-base: var(--ion-color-green);
+}
+
+.ion-color-gregorian {
+  --ion-color-base: var(--ion-color-gregorian);
 }
 
 .ion-color-main {
@@ -54,6 +74,30 @@ ion-title {
   bottom: 0px !important;
   padding-bottom: 3px !important;
   z-index: 100;
+}
+
+ion-modal#modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#modal ion-icon {
+  margin-right: 6px;
+  width: 48px;
+  height: 48px;
+  padding: 4px 0;
+  color: #aaaaaa;
+}
+
+ion-modal#modal .wrapper {
+  margin-bottom: 10px;
 }
 
 body.scanner-active {

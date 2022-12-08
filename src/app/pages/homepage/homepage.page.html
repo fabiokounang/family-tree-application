@@ -34,7 +34,7 @@
 
   <ion-card class="biodata">
     <ion-text color="main">
-      <h1 *ngIf="user">{{user.chinese_name.length > 7 ? user.chinese_name.slice(0, 7) + '...' : user.chinese_name }}</h1>
+      <h1 *ngIf="user && user.chinese_name">{{user.chinese_name.length > 15 ? user.chinese_name.slice(0, 15) + '...' : user.chinese_name }}</h1>
     </ion-text>
 
     <ion-text color="main">
@@ -78,7 +78,8 @@
           <img src="{{slide.image}}" alt="">
         </ion-slide>
       </ion-slides>
-      <div class="bullets">
+      <br *ngIf="slides.length === 1">
+      <div *ngIf="slides.length > 1" class="bullets">
         <div *ngFor="let slide of slides; let i = index" [ngClass]="{
           bullet: i === bullet,
           'no-bullet': i !== bullet
@@ -88,7 +89,7 @@
   </div>
 
   <div class="newsletter-wrapper">
-    <ion-card class="newsletter ion-no-margin">
+    <ion-card *ngIf="newsletter.length > 0" class="newsletter ion-no-margin">
       <div routerLink="/detail-newsletter/{{news._id}}" *ngFor="let news of newsletter; let i = index" class="section">
         <ion-text class="title-container" color="main">
           <img src="../../../assets/images/shape.svg" alt="">

@@ -14,7 +14,7 @@
       <img src="../../../assets/images/membercard.jpg" alt="">
     </div>
     <div class="desc">
-      <h1>{{chinese_name.slice(0, 10)}}</h1>
+      <h1>{{chinese_name ? chinese_name.slice(0, 15) : ''}}</h1>
       <p>{{fullname | titlecase}}</p>
     </div>
 

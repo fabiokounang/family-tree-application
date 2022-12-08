@@ -14,8 +14,6 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
-import { BannerInterface } from 'src/app/interfaces/banner.interface';
-import { BannerPaginationInterface } from 'src/app/interfaces/bannerpagination.interface';
 
 @Component({
   selector: 'app-homepage',
@@ -36,11 +34,7 @@ export class HomepagePage implements OnInit, ViewWillEnter {
   color: string = '#FFFFFF';
   text: string = '#FFFFFF';
   emptyDay: any = [];
-  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  nowMonth = new Date().getMonth() + 1;
-  today = new Date().getDate();
-  isModalOpen: boolean = false;
-  detailDataCalendar: any = [];
+
   token: string = '';
   ionApp: HTMLElement = document.querySelector('ion-app');
   body: HTMLElement = document.querySelector('body');
@@ -192,7 +186,6 @@ export class HomepagePage implements OnInit, ViewWillEnter {
   ionViewWillEnter () {
     this.fillData();
     this.getUser();
-    this.getCalendar();
     this.getBanner();
     this.getBulletin();
   }
@@ -200,7 +193,6 @@ export class HomepagePage implements OnInit, ViewWillEnter {
   async refreshPage (event) {
     setTimeout(() => {
       this.getUser();
-      this.getCalendar();
       this.getBanner();
       this.getBulletin();
       event.target.complete();
@@ -255,48 +247,6 @@ export class HomepagePage implements OnInit, ViewWillEnter {
     this.sharedService.callAlert('Point Information', 'You can redeem point and use it to get prizes', '', ['Dismiss']);
   }
 
-  getCalendar () {
-    this.apiService.connection('master-calendar-active').subscribe({
-      next: (response: any) => {
-        this.calendar = response.value;
-        this.processEmptyDay();
-      },
-      error: ({ error }: HttpErrorResponse) => {
-        this.loader = false;
-        this.sharedService.callAlert(!error.error ? error : error.error);
-      },
-      complete: () => {
-        this.loader = false;
-      }
-    });
-  }
-
-  processEmptyDay () {
-    const year = new Date().getFullYear();
-    const d = `${this.months[this.month - 1]} 1, ${year} 00:00:01`;
-    const day = new Date(d).getDay();
-    this.emptyDay = Array.from(Array(day).keys());
-  }
-
-  onDetailEvent (event) {
-    this.sharedService.callAlert(event.name, event.description);
-  }
-
-  onCalendarEvents (events) {
-    this.isModalOpen = !this.isModalOpen;
-  }
-
-  setOpen (bool, data = null) {
-    if (bool && data.length <= 0) {
-      this.sharedService.callToast('No event on this data', 'bottom', 1000);
-      return;
-    }
-
-    this.isModalOpen = bool;
-    if (this.isModalOpen) this.detailDataCalendar = data;
-    else this.detailDataCalendar = null;
-  }
-
   async onPermissionCamera () {
     const status = await BarcodeScanner.checkPermission({ force: true });
     return status;
@@ -330,12 +280,6 @@ export class HomepagePage implements OnInit, ViewWillEnter {
     BarcodeScanner.stopScan();
     this.ionApp.classList.remove('scanner-ui');
     this.body.classList.remove('scanner-active');
-  }
-
-  changeMonth (num: number) {
-    if (this.month + num > 0 && this.month + num <= 12) this.month = this.month + num;
-    this.nowMonth = this.month;
-    this.processEmptyDay();
   }
 
   requestNotification () {

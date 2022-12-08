@@ -1,5 +1,135 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="none">
-    <ion-title>Coming Soon</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="none">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/homepage" color="main"></ion-back-button>
+      </ion-buttons>
+      <ion-title color="main">Kalender</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- <div class="toggle">
+    <ion-toggle [color]="type ? 'lunar' : 'gregorian'" (ionChange)="onToggle($event)"></ion-toggle>
+  </div> -->
+
+  <br><br>
+
+  <div *ngIf="calendar && calendar.calendar">
+    <div class="calendar" >
+      <div class="month-section">
+        <ion-icon (click)="changeMonth(-1)" color="main" name="chevron-back-outline"></ion-icon>
+        &nbsp;
+        <p>{{months[month - 1]}} {{calendar.year}}</p>
+        &nbsp;
+        <ion-icon (click)="changeMonth(1)" color="main" name="chevron-forward-outline"></ion-icon>
+      </div>
+
+      <div class="day-section" *ngIf="!splitSecond">
+        <span *ngFor="let empty of emptyDay; let i = index" class="day"></span>
+
+        <span
+          [id]="'open-event-detail-' + i"
+          (click)="onOpenFormEvent(calendar, month, day)"
+          class="day"
+          appWeekend
+          [year]="calendar.year"
+          [month]="month"
+          [day]="+day"
+          [event]="calendar.calendar[month][day].events.length"
+          *ngFor="let day of objectKeys(calendar.calendar[month]); let i = index"
+        >
+          <span class="d">
+            <span [ngClass]="{
+              fullmooncircle: calendar.calendar[month][day].moon === 1 && (calendar.calendar[month][day].events.length > 0 || +day === nowDay),
+              deadmooncircle: calendar.calendar[month][day].moon === 2 && (calendar.calendar[month][day].events.length > 0 || +day === nowDay),
+              fullmoon: calendar.calendar[month][day].moon === 1 && (calendar.calendar[month][day].events.length <= 0  && +day !== nowDay),
+              deadmoon: calendar.calendar[month][day].moon === 2 && (calendar.calendar[month][day].events.length <= 0 && +day !== nowDay)
+            }"></span>
+            <span [ngClass]="{
+              today: +day === +nowDay,
+              isEvent: calendar.calendar[month][day].events.length > 0
+            }">
+              {{day}}
+            </span>
+          </span>
+          <br>
+          <small>{{calendar.calendar[month][day]?.lunar?.slice(0, 2)}}</small>
+
+          <ion-modal id="modal" #modal [trigger]="'open-event-detail-' + i">
+            <ng-template>
+              <div class="wrapper" *ngIf="selectedDayData">
+                <h1>Dialog header</h1>
+
+                <ion-list lines="none">
+                  <ion-item button="true" detail="false" (click)="modal.dismiss()">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <ion-label>{{selectedDayData.month}}</ion-label>
+                  </ion-item>
+                  <ion-item button="true" detail="false" (click)="modal.dismiss()">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <ion-label>{{selectedDayData.day}}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </div>
+
+              <div *ngIf="!selectedDayData">
+                <h1>
+                  No Event
+                </h1>
+              </div>
+            </ng-template>
+          </ion-modal>
+        </span>
+      </div>
+
+      <div class="desc-section">
+        <div class="left">
+          <div class="text-wrapper text-right">
+            <div class="acara"></div>&nbsp;
+            <p>Acara</p>
+          </div>
+          <div class="text-wrapper">
+            <div class="hariini"></div>&nbsp;
+            <p>Hari Ini</p>
+          </div>
+        </div>
+        <div class="right">
+          <div class="text-wrapper text-right">
+            <div class="bulanpurnama"></div>&nbsp;
+            <p>Bulan Purnama</p>
+          </div>
+          <div class="text-wrapper">
+            <div class="bulanmati"></div>&nbsp;
+            <p>Bulan Mati</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="calendar.calendar[nowMonth][nowDay].events.length > 0" class="events">
+      <h2>Acara Hari Ini</h2>
+      <ion-item
+        *ngFor="let event of calendar.calendar[nowMonth][nowDay].events; let i = index"
+        routerLink="/profile-information"
+        color="main"
+        detail="false"
+        class="ion-no-padding"
+      >
+        <img src="../../../assets/images/shape-white.svg" alt="">
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+
+        <div>
+          <br>
+          <p class="title">{{event.name.slice(0, 50) | titlecase }} </p>
+          <p class="description">{{event.description.slice(0, 35)}}{{event.description.length > 35 ? '...' : ''}}</p>
+          <br>
+        </div>
+      </ion-item>
+    </div>
+  </div>
+
+  <div *ngIf="!calendar || !calendar.calendar[nowMonth]">
+    <p style="text-align: center; font-family: var(--font-primary)">No calendar at the moment...</p>
+  </div>
+
+</ion-content>

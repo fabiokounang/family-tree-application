@@ -50,7 +50,7 @@ const routes: Routes = [
     path: 'event/:id',
     loadChildren: () => import('./pages/register-event/register-event.module').then( m => m.RegisterEventPageModule),
     canActivate: [GuardService]
-  }
+  },
 ]
 
 

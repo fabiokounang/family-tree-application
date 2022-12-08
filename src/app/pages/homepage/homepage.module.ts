@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { HomepagePageRoutingModule } from './homepage-routing.module';
 
 import { HomepagePage } from './homepage.page';
-import { WeekendDirective } from 'src/app/directives/weekend.directive';
 
 @NgModule({
   imports: [
@@ -17,6 +16,6 @@ import { WeekendDirective } from 'src/app/directives/weekend.directive';
     HomepagePageRoutingModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  declarations: [HomepagePage, WeekendDirective]
+  declarations: [HomepagePage]
 })
 export class HomepagePageModule {}

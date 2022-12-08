@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CalendarPageRoutingModule } from './calendar-routing.module';
 
 import { CalendarPage } from './calendar.page';
+import { WeekendDirective } from 'src/app/directives/weekend.directive';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { CalendarPage } from './calendar.page';
     IonicModule,
     CalendarPageRoutingModule
   ],
-  declarations: [CalendarPage]
+  declarations: [CalendarPage, WeekendDirective]
 })
 export class CalendarPageModule {}

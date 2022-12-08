@@ -9,10 +9,13 @@ import { Subject } from 'rxjs';
 
 export class SharedService {
   onChangeMonth: Subject<any> = new Subject();
+
   errGeneral: string = 'Kesalahan sistem, silahkan coba lagi';
   sessionOver: string = 'Sesi anda telah habis, silahkan masuk kembali';
   connectionError: string = 'Koneksi internet terputus, Silahkan cek kembali jaringan anda';
   subConnectionError: string = 'Silahkan cek kembali jaringan anda';
+
+
   constructor (private toastController: ToastController, private alertController: AlertController) {}
 
   saveToLocalStorage (user: UserInterface) {
