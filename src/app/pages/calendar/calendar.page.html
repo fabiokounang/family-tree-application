@@ -46,7 +46,7 @@
               deadmoon: calendar.calendar[month][day].moon === 2 && (calendar.calendar[month][day].events.length <= 0 && +day !== nowDay)
             }"></span>
             <span [ngClass]="{
-              today: +day === +nowDay,
+              today: +day === +nowDay && nowMonth === month,
               isEvent: calendar.calendar[month][day].events.length > 0
             }">
               {{day}}
@@ -73,8 +73,8 @@
                 <div class="content" *ngFor="let event of selectedDayData.events; let j = index">
                   <p class="title">{{event.name}}</p>
                   <p class="subtitle">{{event.subtitle}}</p>
-                  <p class="description">{{event.description}}</p>
-                  <img [src]="event.image" alt="">
+                  <p class="description" [innerHTML]="event.description"></p>
+                  <!-- <img [src]="event.image" alt=""> -->
                   <div *ngIf="j !== selectedDayData.events.length -1" class="ruler"></div>
                 </div>
               </div>

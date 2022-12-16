@@ -96,8 +96,7 @@ export class CalendarPage implements ViewWillEnter {
 
   changeMonth (num: number) {
     const totalCalendar = Object.keys(this.calendar.calendar).length;
-    if (totalCalendar + num > totalCalendar && totalCalendar + num <= totalCalendar) this.month = this.month + num;
-    console.log(this.month, 'this month')
+    if (this.month + num  > 0 && this.month + num <= totalCalendar) this.month = this.month + num;
     this.processEmptyDay();
     this.splitSecond = true;
     setTimeout(() => this.splitSecond = false);
