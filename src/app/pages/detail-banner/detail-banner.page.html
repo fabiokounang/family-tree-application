@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/home/homepage" color="main"></ion-back-button>
       </ion-buttons>
-      <ion-title color="main">Detail Bulletin</ion-title>
+      <ion-title color="main">Promo Terkini</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -23,10 +23,10 @@
     </div>
   </div>
   <br>
-  <div *ngIf="newsletter.length > 0" class="other-content">
+  <div *ngIf="banner.length > 0" class="other-content">
     <p>Buletin Lainnya</p>
     <ion-slides #slide (ionSlideTouchEnd)="onSlide($event)" pager="false" [options]="slideOpts">
-      <ion-slide (click)="onOtherNewsLetter(new)" class="img-other-content" *ngFor="let new of newsletter; let i = index">
+      <ion-slide (click)="onOtherNewsLetter(new)" class="img-other-content" *ngFor="let new of banner; let i = index">
         <img [src]="new.image" alt="">
       </ion-slide>
     </ion-slides>

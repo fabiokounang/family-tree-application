@@ -1,9 +1,7 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Meta } from '@angular/platform-browser';
-import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { NavController, ViewWillEnter } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { DropdownInterface } from 'src/app/interfaces/dropdown.interface';
 import { ProvincePaginationInterface } from 'src/app/interfaces/provincepagination.interface';
@@ -25,7 +23,7 @@ export class ProfileInformationPage implements ViewWillEnter {
   provinces: any = [];
   selectedCities: any = null;
   cities: any = [];
-  constructor (private router: Router, private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
+  constructor (private apiService: ApiService, private sharedService: SharedService, private navCtrl: NavController) { }
 
   ionViewWillEnter () {
     this.getUser();
@@ -51,12 +49,12 @@ export class ProfileInformationPage implements ViewWillEnter {
   }
 
   makeForm () {
-    console.log(this.user)
     this.formProfile = new FormGroup({
       fullname: new FormControl(this.user.fullname, [Validators.required]),
       email: new FormControl(this.user.email, [Validators.required, Validators.email]),
       chinese_name: new FormControl(this.user.chinese_name, [Validators.maxLength(200)]),
       place_of_birth: new FormControl(this.user.place_of_birth._id, [Validators.required]),
+      nik: new FormControl(this.user.nik, [Validators.minLength(16), Validators.maxLength(16)]),
       city_of_residence: new FormControl({ value: this.user.city_of_residence._id, disabled: false }, [Validators.required]),
     });
   }
@@ -121,6 +119,7 @@ export class ProfileInformationPage implements ViewWillEnter {
           this.user.chinese_name = this.formProfile.value.chinese_name;
           this.sharedService.setChineseNameLocalStorage(this.user.chinese_name || '');
           this.isEditMode = false;
+          this.sharedService.setFlagUpdateProfile();
         },
         error: ({ error }: HttpErrorResponse) => {
           this.sharedService.callAlert(!error.error ? error : error.error);

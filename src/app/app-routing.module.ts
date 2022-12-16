@@ -42,6 +42,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/detail-newsletter/detail-newsletter.module').then( m => m.DetailNewsletterPageModule)
   },
   {
+    path: 'detail-banner/:id',
+    canActivate: [GuardService],
+    loadChildren: () => import('./pages/detail-banner/detail-banner.module').then( m => m.DetailBannerPageModule)
+  },
+  {
     path: 'profile-information',
     loadChildren: () => import('./pages/profile-information/profile-information.module').then( m => m.ProfileInformationPageModule),
     canActivate: [GuardService]

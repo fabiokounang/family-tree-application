@@ -23,7 +23,9 @@ export class CalendarPage implements ViewWillEnter {
   user: any = null;
   themes: any[] = [];
   theme: any = null;
+  days: string[] = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
   months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  monthsIndo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   loader: boolean = false;
   emptyDay: any = [];
   today = new Date().getDate();
@@ -48,7 +50,6 @@ export class CalendarPage implements ViewWillEnter {
     this.apiService.connection('master-calendar-active').subscribe({
       next: (response: any) => {
         this.calendar = response.value;
-        console.log(this.calendar)
         this.processEmptyDay();
       },
       error: ({ error }: HttpErrorResponse) => {
@@ -76,20 +77,27 @@ export class CalendarPage implements ViewWillEnter {
     this.isModalOpen = !this.isModalOpen;
   }
 
-  async onOpenFormEvent (calendar, month, day) {
-    if (calendar.calendar[month][day] && calendar.calendar[month][day].events.length > 0) {
+  async onOpenFormEvent (calendar, month, day, year) {
+    if (calendar.calendar[month][day] && calendar.calendar[month][day].events && calendar.calendar[month][day].events.length > 0) {
+      const dayFix = new Date(`${year}-${month}-${day}`);
       this.selectedDayData = {
+        lunar: calendar.calendar[month][day].lunar,
         events: calendar.calendar[month][day].events,
-        month: month,
-        day: day
+        month: this.monthsIndo[month - 1],
+        day: day,
+        dayFix: this.days[dayFix.getDay()],
+        year: year
       }
     } else {
       this.selectedDayData = null;
+      this.sharedService.callToast('Tidak ada acara', 'bottom');
     }
   }
 
   changeMonth (num: number) {
-    if (this.month + num > 0 && this.month + num <= 12) this.month = this.month + num;
+    const totalCalendar = Object.keys(this.calendar.calendar).length;
+    if (totalCalendar + num > totalCalendar && totalCalendar + num <= totalCalendar) this.month = this.month + num;
+    console.log(this.month, 'this month')
     this.processEmptyDay();
     this.splitSecond = true;
     setTimeout(() => this.splitSecond = false);

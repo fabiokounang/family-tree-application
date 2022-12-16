@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ViewWillEnter } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { UserInterface } from 'src/app/interfaces/user.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { SharedService } from 'src/app/services/shared.services';
@@ -11,21 +13,38 @@ import { SharedService } from 'src/app/services/shared.services';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, ViewWillEnter {
   user: any;
   url: string = '';
   loader: boolean = false;
   fullname: string = '';
   chinese_name: string = '';
+  image: string = '';
+  subscription: Subscription;
 
-  constructor (private router: Router, private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
+  constructor (private route: ActivatedRoute, private router: Router, private apiService: ApiService, private sharedService: SharedService, private meta: Meta) { }
 
   ngOnInit() {
     this.url = this.meta.getTag('name=api').content + 'images/';
+    this.listenSubscription();
   }
 
   ionViewWillEnter () {
     this.getUser();
+    this.fillData();
+  }
+
+  listenSubscription () {
+    this.route.queryParams.subscribe((param) => {
+      if (this.sharedService.getFlagUpdateProfile()) {
+        this.getUser();
+        this.fillData();
+        this.sharedService.removeFlagUpdateProfile();
+      }
+    });
+  }
+
+  fillData () {
     this.fullname = this.sharedService.getLocalStorage().fullname;
     this.chinese_name = this.sharedService.getLocalStorage().chinese_name;
   }
@@ -35,6 +54,7 @@ export class ProfilePage implements OnInit {
     this.apiService.connection('master-self-user').subscribe({
       next: (response: UserInterface) => {
         this.user = response;
+        this.image = response.membercard.image;
         this.loader = false;
       },
       error: ({ error }: HttpErrorResponse) => {

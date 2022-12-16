@@ -9,9 +9,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="member-card">
+  <div class="member-card" *ngIf="image">
     <div>
-      <img src="../../../assets/images/membercard.jpg" alt="">
+      <img [src]="image" alt="">
     </div>
     <div class="desc">
       <h1>{{chinese_name ? chinese_name.slice(0, 15) : ''}}</h1>

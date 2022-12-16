@@ -44,7 +44,11 @@ export class HomepagePage implements OnInit, ViewWillEnter {
   no_anggota: string = '';
   showMore: boolean = false;
   slides: any = null;
-
+  nowDay = new Date();
+  days: string[] = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  chinesedays: string[] = ['星期', '周一', '周二', '周三', '周四', '星期五', '周六'];
+  chineseday: string = '';
+  day: string = '';
   slideOpts = {
     slidesPerView: 1,
     coverflowEffect: {
@@ -134,36 +138,7 @@ export class HomepagePage implements OnInit, ViewWillEnter {
     }
   }
 
-  newsletter: any[] = [
-    {
-      id: 1,
-      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 1',
-      image: '',
-      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
-      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
-    },
-    {
-      id: 2,
-      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 2',
-      image: '',
-      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
-      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
-    },
-    {
-      id: 3,
-      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 3',
-      image: '',
-      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
-      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
-    },
-    {
-      id: 4,
-      title: 'Lorem ipsum dolor sit! Lorem ipsum dolor sit amet 4',
-      image: '',
-      subtitle: 'Lorem ipsum dolor sit amet elit. Velit, odit!',
-      description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus eligendi vel provident labore nobis nemo repellat sapiente consectetur facere, ea, quos qui aliquid laboriosam! Doloremque esse nobis sunt laborum quia tempore voluptate beatae quaerat nihil maxime, adipisci minima quis voluptatem aperiam, excepturi minus eligendi nulla illum ipsum! Fuga, inventore similique.'
-    }
-  ]
+  newsletter: any[] = [];
 
   constructor (private apiService: ApiService, private sharedService: SharedService, private meta: Meta, private router: Router, private platform: Platform) { }
 
@@ -173,6 +148,10 @@ export class HomepagePage implements OnInit, ViewWillEnter {
   }
 
   fillData () {
+    const currentDayIdx = new Date().getDay() - 1;
+    const countDay = currentDayIdx < 0 ? 0 : currentDayIdx;
+    this.day = this.days[countDay];
+    this.chineseday = this.chinesedays[countDay];
     this.fullname = this.sharedService.getLocalStorage().fullname;
     this.no_anggota = this.sharedService.getLocalStorage().no_anggota;
   }
@@ -196,9 +175,8 @@ export class HomepagePage implements OnInit, ViewWillEnter {
       this.getBanner();
       this.getBulletin();
       event.target.complete();
-    }, 2000);
+    }, 1000);
   }
-
 
   onSlide (event) {
     this.slide.getActiveIndex().then((index) => {

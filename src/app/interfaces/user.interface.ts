@@ -1,3 +1,5 @@
+import { MemberCardInterface } from "./membercard.interface";
+
 export interface UserInterface {
   _id: string;
   username: string;
@@ -22,4 +24,5 @@ export interface UserInterface {
   remark: string;
   token: string;
   point: number;
+  membercard: MemberCardInterface
 }

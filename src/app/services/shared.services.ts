@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import HttpList from '../utils/http-endpoint';
 import { AlertController, ToastController } from "@ionic/angular";
 import { UserInterface } from "../interfaces/user.interface";
 import { Subject } from 'rxjs';
@@ -9,6 +8,7 @@ import { Subject } from 'rxjs';
 
 export class SharedService {
   onChangeMonth: Subject<any> = new Subject();
+  onUpdateProfile: Subject<any> = new Subject();
 
   errGeneral: string = 'Kesalahan sistem, silahkan coba lagi';
   sessionOver: string = 'Sesi anda telah habis, silahkan masuk kembali';
@@ -61,6 +61,18 @@ export class SharedService {
 
   setChineseNameLocalStorage (chineseName) {
     localStorage.setItem('chinese_name', chineseName);
+  }
+
+  getFlagUpdateProfile () {
+    return localStorage.getItem('updateprofile');
+  }
+
+  setFlagUpdateProfile () {
+    localStorage.setItem('updateprofile', 'true');
+  }
+
+  removeFlagUpdateProfile () {
+    localStorage.removeItem('updateprofile');
   }
 
   async callToast (message: string, position: 'top' | 'middle' | 'bottom', duration: number = 3000, header = '') {

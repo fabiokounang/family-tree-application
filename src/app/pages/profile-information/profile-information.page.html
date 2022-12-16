@@ -24,9 +24,13 @@
           <ion-note color="main">{{user.email}}</ion-note>
         </ion-item>
         <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
+          <ion-label color="main" class="left">NIK</ion-label>
+          <ion-note color="main">{{user.nik}}</ion-note>
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
           <ion-label color="main" class="left">Nama Chinese</ion-label>
           <ion-note color="main">
-            {{user.chinese_name && user.chinese_name.length > 10 ? user.chinese_name.slice(0, 10) + '...' : user.chinese_name }}
+            {{user.chinese_name && user.chinese_name.length > 10 ? user.chinese_name.slice(0, 10) + '...' : (user.chinese_name || '-') }}
           </ion-note>
         </ion-item>
         <ion-item color="none" lines="none" class="ion-no-padding ion-margin">
@@ -67,6 +71,16 @@
             </ion-note>
             <ion-note color="danger" *ngIf="formProfile.get('email').hasError('email') && formProfile.get('email').touched">
               <small>Email tidak valid</small>
+            </ion-note>
+          </div>
+
+          <div class="item">
+            <ion-item lines="none" color="none" class="ion-no-padding input">
+              <ion-label position="floating">NIK</ion-label>
+              <ion-input formControlName="nik" type="text"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="formProfile.get('nik').hasError('minlength') || formProfile.get('nik').hasError('maxlength') && formProfile.get('nik').touched">
+              <small>NIK wajib 16 digit angka</small>
             </ion-note>
           </div>
 

@@ -39,7 +39,7 @@ export class SignupPage implements OnInit {
   makeForm () {
     this.signupForm = new FormGroup({
       fullname: new FormControl(null, [Validators.required]),
-      nik: new FormControl(null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
+      nik: new FormControl(null, [Validators.minLength(16), Validators.maxLength(16)]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), this.checkPassword.bind(this)]),
       confirmation_password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16), this.checkConfirmationPassword.bind(this)]),

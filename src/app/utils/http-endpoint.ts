@@ -15,6 +15,7 @@ export default {
   'master-user-tokenfcm': 'api/user/fcm',
   'master-user': 'api/user/user',
   'master-banner': 'api/banner/banner_user',
+  'master-one-banner': 'api/banner',
   'master-bulletin': 'api/bulletin/bulletin_user',
   'master-one-bulletin': 'api/bulletin',
   'master-tree': 'api/tree',
