@@ -54,7 +54,7 @@ export class ProfilePage implements OnInit, ViewWillEnter {
     this.apiService.connection('master-self-user').subscribe({
       next: (response: UserInterface) => {
         this.user = response;
-        this.image = response.membercard.image;
+        this.image = response.membercard?.image;
         this.loader = false;
       },
       error: ({ error }: HttpErrorResponse) => {

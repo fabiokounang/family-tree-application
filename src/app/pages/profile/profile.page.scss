@@ -51,6 +51,12 @@ ion-content {
     // }
   }
 
+  div.no-card {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
+  }
+
   div.action {
     margin-top: 2rem;
     background-color: var(--ion-color-main);

@@ -29,7 +29,7 @@ export class WeekendDirective implements OnInit, OnDestroy {
     const date = new Date(this.year, this.month - 1, this.day - 1).getDay();
     if (date >= 5) {
       this.renderer2.setStyle(this.elementRef.nativeElement, 'color', 'red');
-      // this.renderer2.setStyle(this.elementRef.nativeElement, 'fontWeight', 'bold');
+      this.renderer2.setStyle(this.elementRef.nativeElement, 'fontWeight', 'bold');
       // if (this.event > 0) this.renderer2.setStyle(this.elementRef.nativeElement, 'color', 'blue');
     }
   }

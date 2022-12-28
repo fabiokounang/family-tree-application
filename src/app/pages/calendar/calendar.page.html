@@ -129,7 +129,7 @@
     </div>
   </div>
 
-  <div *ngIf="!calendar || !calendar.calendar[nowMonth]">
+  <div *ngIf="!calendar || !calendar.calendar || !calendar.calendar[nowMonth]">
     <p style="text-align: center; font-family: var(--font-primary)">No calendar at the moment...</p>
   </div>
 
